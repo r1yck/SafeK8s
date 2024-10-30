@@ -49,22 +49,3 @@ Antes de instalar o SafeK8s, certifique-se de ter o seguinte:
    ```
 
 5. **Abra o aplicativo no seu dispositivo**: Utilize o aplicativo Expo Go disponível na Play Store ou App Store para escanear o QR code gerado no terminal.
-
-## Contribuição
-
-Contribuições são bem-vindas! Se você deseja contribuir, siga os seguintes passos:
-
-1. Fork o repositório.
-2. Crie uma nova branch para sua feature:
-   ```bash
-   git checkout -b minha-feature
-   ```
-3. Faça suas alterações e commit:
-   ```bash
-   git commit -m 'Adicionando minha feature'
-   ```
-4. Faça o push para a branch:
-   ```bash
-   git push origin minha-feature
-   ```
-5. Abra um Pull Request.
