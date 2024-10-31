@@ -1,22 +1,13 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
-import LoginScreen from './src/screens/LoginScreen';
+import { SafeAreaView } from 'react-native';
+import LoginScreen from './src/screens/LoginScreen'; // ajuste o caminho conforme necessário
 
-export default function App() {
+const App: React.FC = () => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={{ flex: 1 }}>
       <LoginScreen />
-      <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#15616D', // Cor de fundo da tela
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
