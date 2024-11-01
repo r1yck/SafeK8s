@@ -5,8 +5,6 @@ export default function LoginScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>SafeK8s</Text>
-      
-      {/* Campo de entrada personalizado */}
       <TextInput 
         style={styles.input} 
         placeholder="USER" 
@@ -30,11 +28,11 @@ const styles = StyleSheet.create({
     width: 369, // Largura
     height: 116, // Altura
     textAlign: 'center',
-    fontFamily: 'Inter-Regular', // Altere aqui para corresponder ao nome da fonte
+    fontFamily: 'Inter-Regular',
     fontStyle: 'normal',
     fontWeight: '400',  
     fontSize: 90,
-    lineHeight: 109, // idêntico à altura da caixa
+    lineHeight: 109, 
     color: '#FFECD1', // Cor do texto
     // Efeito de sombra
     textShadowColor: 'rgba(0, 0, 0, 0.25)',
