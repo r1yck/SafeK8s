@@ -1,11 +1,17 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, TextInput } from 'react-native';
 
 export default function LoginScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>SafeK8s</Text>
-      {/* Outros componentes serão adicionados aqui */}
+      
+      {/* Campo de entrada personalizado */}
+      <TextInput 
+        style={styles.input} 
+        placeholder="USER" 
+        placeholderTextColor="#000000B3"
+      />
     </View>
   );
 }
@@ -23,11 +29,28 @@ const styles = StyleSheet.create({
     top: 283, // Coordenada Y
     width: 369, // Largura
     height: 116, // Altura
-    fontFamily: 'Inter',
+    textAlign: 'center',
+    fontFamily: 'Inter-Regular', // Altere aqui para corresponder ao nome da fonte
     fontStyle: 'normal',
-    fontWeight: '400',
+    fontWeight: '400',  
     fontSize: 90,
     lineHeight: 109, // idêntico à altura da caixa
     color: '#FFECD1', // Cor do texto
+    // Efeito de sombra
+    textShadowColor: 'rgba(0, 0, 0, 0.25)',
+    textShadowOffset: { width: 0, height: 4 },
+    textShadowRadius: 6,
+  },
+  input: {
+    width: 340,
+    height: 48,
+    backgroundColor: '#FFECD1',
+    borderColor: '#000000',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    color: '#000000',
+    fontSize: 16,
+    marginTop: 20, // para dar espaço abaixo do título
   },
 });
