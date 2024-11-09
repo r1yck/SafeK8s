@@ -1,20 +1,31 @@
-import { Pressable, Text, View} from "react-native";
+import { Pressable, Text, StyleSheet, PressableProps } from "react-native";
+
 type StyleKeys = 'primary' | 'warning' | 'error' | 'transparent';
 
-type ButtonProps = PressableProps &{
-    title: string;
-    className?: StyleKeys;
+interface ButtonProps extends PressableProps {
+  title: string;
+  className: StyleKeys;
 }
 
-export default function Button({title, ...rest}) {
-    const styleText = className == 'transparent' 
+
+export default function Button({ title, className, ...rest }: ButtonProps) {
+  const styleText = className === 'transparent'
     ? [styles.buttonText, styles.transparentText]
     : styles.buttonText;
-    return (
-        <View>
-            <Pressable>
-                <Text>{title}</Text>
-            </Pressable>
-        </View>
-    );
+
+  return (
+    <Pressable {...rest}>
+      <Text style={styleText}>{title}</Text>
+    </Pressable>
+  );
 }
+
+const styles = StyleSheet.create({
+  buttonText: {
+    color: 'white', // Alterar conforme necessário
+    fontSize: 16, // Alterar conforme necessário
+  },
+  transparentText: {
+    color: 'black', // Alterar conforme necessário
+  },
+});

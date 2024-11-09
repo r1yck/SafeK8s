@@ -1,24 +1,29 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
-import LoginScreen from './src/screens/LoginScreen';
+import AppNavigation from './src/navigation/AppNavigation';
 
 const App: React.FC = () => {
-  // Carregar a fonte personalizada
   const [fontsLoaded] = useFonts({
-    'Inter-Regular': require('./assets/fonts/Inter_24pt-Regular.ttf'),
+    'Inter-Regular': require('./assets/fonts/Inter-Regular.ttf'),
   });
 
-  // Retornar null enquanto a fonte não é carregada
   if (!fontsLoaded) {
     return null;
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <LoginScreen />
+    <SafeAreaView style={styles.container}>
+      <AppNavigation />
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#15616D',
+  },
+});
 
 export default App;
