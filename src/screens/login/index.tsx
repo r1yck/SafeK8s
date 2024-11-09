@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, TextInput } from 'react-native';
+import Button from '../components/buttons/button';
 
 export default function LoginScreen() {
   return (
@@ -10,6 +11,7 @@ export default function LoginScreen() {
         placeholder="USER" 
         placeholderTextColor="#000000B3"
       />
+      <Button></Button>
     </View>
   );
 }
