@@ -22,10 +22,10 @@ export default function Button({ title, className, ...rest }: ButtonProps) {
 
 const styles = StyleSheet.create({
   buttonText: {
-    color: 'white', // Alterar conforme necessário
-    fontSize: 16, // Alterar conforme necessário
+    color: 'white',
+    fontSize: 16, 
   },
   transparentText: {
-    color: 'black', // Alterar conforme necessário
+    color: 'black', 
   },
 });
