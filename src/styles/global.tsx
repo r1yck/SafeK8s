@@ -4,20 +4,20 @@ const global = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 20,
-        backgroundColor: '#15616D', // Cor de fundo do contêiner padrão
-        alignItems: 'center', // Centraliza o conteúdo horizontalmente
-        justifyContent: 'center', // Centraliza o conteúdo verticalmente
+        backgroundColor: '#15616D',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     title: {
         fontSize: 32,
         fontWeight: 'bold',
-        color: '#FFECD1', // Cor padrão para os títulos
+        color: '#FFECD1',
         textAlign: 'center',
         marginBottom: 20,
     },
     text: {
         fontSize: 16,
-        color: '#FFECD1', // Cor de texto padrão
+        color: '#FFECD1',
     },
     input: {
         width: '100%',
@@ -36,6 +36,10 @@ const global = StyleSheet.create({
         paddingHorizontal: 32,
         backgroundColor: '#005f6b',
         borderRadius: 5,
+        alignItems: 'center',
+    },
+    centerAlign: { 
+        justifyContent: 'center',
         alignItems: 'center',
     },
 });

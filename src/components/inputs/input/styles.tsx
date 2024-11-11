@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16, // Tamanho da fonte do título
     color: '#FFECD1', // Cor do texto do título
-    marginBottom: 5, // Espaçamento entre o título e o input
+    marginBottom: -10, // Espaçamento entre o título e o input
   },
   input: {
     height: 48, // Altura do campo de texto

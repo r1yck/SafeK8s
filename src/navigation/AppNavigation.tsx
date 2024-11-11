@@ -12,10 +12,21 @@ const AppNavigation: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
-        {/* Adicione mais telas conforme necessário */}
+        <Stack.Screen 
+          name="Login" 
+          component={LoginScreen} 
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+        name="ResetPassword" 
+        component={ResetPasswordScreen} 
+        options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+        name="Register" 
+        component={RegisterScreen} 
+        options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

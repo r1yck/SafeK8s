@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, Image } from 'react-native';
 import Input from '../../components/inputs/input';
 import Button from '../../components/buttons/button';
 import { useNavigation } from '@react-navigation/native';
@@ -16,19 +16,18 @@ export default function LoginScreen() {
 
     return (
         <View style={global.container}>
+            <Image source={require('../../../assets/App-Logo.png')} style={styles.image} />
             <View style={styles.containerTitle}>
                 <Text style={[global.title, styles.title]}>SafeK8s</Text>
             </View>
             <View style={styles.containerForm}>
                 <Input 
-                    title="Usuário" 
-                    placeholder="Seu nome de usuário" 
+                    placeholder="USER" 
                     returnKeyType="next" 
                     onSubmitEditing={() => passwordRef.current?.focus()} 
                 />
                 <Input 
-                    title="Senha" 
-                    placeholder="Sua senha" 
+                    placeholder="PASSWORD" 
                     secureTextEntry 
                     ref={passwordRef} 
                     returnKeyType="done" 

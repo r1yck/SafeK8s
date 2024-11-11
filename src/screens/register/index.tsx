@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, Image } from 'react-native';
 import Input from '../../components/inputs/input';
 import Button from '../../components/buttons/button';
 import { useNavigation } from '@react-navigation/native';
@@ -17,28 +17,30 @@ const RegisterScreen: React.FC = () => {
 
   return (
     <View style={global.container}>
+      <Image source={require('../../../assets/App-Logo.png')} style={styles.image} />
       <View style={styles.containerTitle}>
-        <Text style={[global.title, styles.title]}>Cadastro SafeK8s</Text>
+        <Text style={[global.title, styles.title]}>SafeK8s</Text>
       </View>
       <View style={styles.containerForm}>
         <Input
-          title="Usuário"
-          placeholder="Escolha seu nome de usuário"
+          placeholder="USER"
           returnKeyType="next"
           onSubmitEditing={() => passwordRef.current?.focus()}
         />
         <Input
-          title="Senha"
-          placeholder="Escolha uma senha"
+          placeholder="PASSWORD"
+          returnKeyType="next"
+          onSubmitEditing={() => passwordRef.current?.focus()}
+        />
+        <Input
+          placeholder="CONFIRM PASSWORD"
           secureTextEntry
           ref={passwordRef}
           returnKeyType="next"
           onSubmitEditing={() => confirmPasswordRef.current?.focus()}
         />
         <Input
-          title="Confirmar Senha"
-          placeholder="Confirme sua senha"
-          secureTextEntry
+          placeholder="FULL NAME"
           ref={confirmPasswordRef}
           returnKeyType="done"
         />
