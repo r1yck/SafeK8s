@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../screens/login'; 
 import ResetPasswordScreen from '../screens/resetPassword'; 
 import RegisterScreen from '../screens/register'; 
+import DashboardScreen from '../screens/dashboard';
 import { RoutesParams } from './routesParams';
 
 const Stack = createNativeStackNavigator<RoutesParams>();
@@ -18,14 +19,19 @@ const AppNavigation: React.FC = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen 
-        name="ResetPassword" 
-        component={ResetPasswordScreen} 
-        options={{ headerShown: false }}
+          name="ResetPassword" 
+          component={ResetPasswordScreen} 
+          options={{ headerShown: false }}
         />
         <Stack.Screen 
-        name="Register" 
-        component={RegisterScreen} 
-        options={{ headerShown: false }}
+          name="Register" 
+          component={RegisterScreen} 
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="Dashboard" 
+          component={DashboardScreen}
+          options={{ headerShown: false }} 
         />
       </Stack.Navigator>
     </NavigationContainer>

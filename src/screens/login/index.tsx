@@ -48,7 +48,7 @@ export default function LoginScreen() {
                         <Select isSelected={isChecked} onToggle={toggleCheckbox} />
                     </View>
                     <View style={styles.containerButtons}>
-                        <Button title="Login" className="primary" />
+                        <Button title="Login" className="primary" onPress={() => navigation.navigate('Dashboard')}/>
                         <Button title="Forgot password" className="transparent" onPress={() => navigation.navigate('ResetPassword')} />
                         <Button title="Register" className="warning" onPress={() => navigation.navigate('Register')} />
                     </View>

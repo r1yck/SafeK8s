@@ -31,6 +31,27 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     flexWrap: 'wrap', // Permite que o texto quebre para a próxima linha
   },
+
+  // Estilo ajustado para o botão negativo conforme solicitado
+  negativeButton: {
+    display: 'flex',
+    width: 121, // Largura ajustada
+    height: 30, // Altura ajustada
+    paddingVertical: 3,  // Padding vertical ajustado
+    paddingHorizontal: 27, // Padding horizontal ajustado
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexShrink: 0,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#000', // Cor da borda
+    backgroundColor: '#78290F', // Cor de fundo do botão
+  },
+
+  positiveButton: {
+    backgroundColor: '#FF7D00', // Cor de fundo do botão positivo
+    borderColor: '#FF7D00', // Cor da borda do botão positivo
+  },
 });
 
 export default styles;
