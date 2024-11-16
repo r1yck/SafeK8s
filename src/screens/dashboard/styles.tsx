@@ -30,18 +30,18 @@ const styles = StyleSheet.create({
   },
   title: {
     display: 'flex',
-    width: 206,          // Largura especificada
-    height: 36,          // Altura especificada
+    width: 206,          
+    height: 36,          
     justifyContent: 'center',
     alignItems: 'center',
-    flexShrink: 0,       // Impede o encolhimento do texto
-    color: '#FFF',       // Cor do texto
-    fontFamily: 'Inter-Regular', // Fonte Inter
-    fontSize: 30,        // Tamanho da fonte
-    fontStyle: 'normal', // Estilo normal
-    fontWeight: '400',   // Peso da fonte
-    lineHeight: 36,      // Altura da linha como número
-    textAlign: 'center', // Alinha o texto no centro
+    flexShrink: 0,      
+    color: '#FFF',       
+    fontFamily: 'Inter-Regular', 
+    fontSize: 30,        
+    fontStyle: 'normal', 
+    fontWeight: '400',   
+    lineHeight: 36,      
+    textAlign: 'center', 
   },
   searchContainer: {
     flexDirection: 'row',

@@ -8,8 +8,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#000',
-    backgroundColor: '#FFECD1', // Cor de fundo da box que contém os cards
-    padding: 10, // Margem interna
+    backgroundColor: '#FFECD1',
+    padding: 10, 
   },
 });
 

@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 0, // Espaçamento entre os componentes
+    marginVertical: 0,
   },
   checkboxContainer: {
     width: 24,
@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFECD1',
   },
   selected: {
-    backgroundColor: '#FFECD1', // Alterado para um fundo mais visível quando selecionado
-    borderColor: '#000', // Garanta que a borda também seja visível
+    backgroundColor: '#FFECD1',
+    borderColor: '#000', 
   },
   text: {
     color: '#FFF',

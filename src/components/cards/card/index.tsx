@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import styles from "./styles"; // Importando os estilos
+import styles from "./styles";
 
 type CardProps = {
   title: string;

@@ -17,15 +17,15 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { RoutesParams } from '../../navigation/routesParams';
 import global from '../../styles/global';
 import styles from './styles';
-import CardList from '../../components/cards/cardslist'; // Importando o CardList
-import Button from '../../components/buttons/button'; // Importando o botão componentizado
+import CardList from '../../components/cards/cardslist';
+import Button from '../../components/buttons/button';
 
 type dashboardParamsList = NativeStackNavigationProp<RoutesParams, 'Dashboard'>;
 
 const data = [
-    { id: '1', title: 'Title' },
-    { id: '2', title: 'Title' },
-    { id: '3', title: 'Title' }
+    { id: '1', title: 'TITLE' },
+    { id: '2', title: 'TITLE' },
+    { id: '3', title: 'TITLE' }
 ];
 
 export default function DashboardScreen() {
@@ -44,9 +44,7 @@ export default function DashboardScreen() {
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <ScrollView contentContainerStyle={global.container} keyboardShouldPersistTaps="handled">
                     <View style={styles.header}>
-                        {/* Logo no canto superior esquerdo */}
                         <Image source={require('../../../assets/App-Logo.png')} style={styles.logo} />
-                        {/* Botão de Logout */}
                         <Button title="Logout" className="negative" />
                     </View>
 

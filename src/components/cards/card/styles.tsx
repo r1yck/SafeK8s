@@ -5,31 +5,31 @@ const styles = StyleSheet.create({
     display: 'flex',
     width: 338,
     height: 36,
-    padding: 6, // Apliquei um valor numérico para padding
-    paddingLeft: 10,  // Especificando padding individualmente para cada lado
+    padding: 6,
+    paddingLeft: 10,
     paddingRight: 13,
     justifyContent: 'center',
     alignItems: 'flex-start',
-    gap: 233, // Verifique se esse valor é necessário
+    gap: 233,
     flexShrink: 0,
     borderWidth: 1,
     borderColor: '#000',
-    backgroundColor: '#FFECD1', // Cor de fundo do card
-    flexDirection: 'row', // Organiza os elementos em linha
+    backgroundColor: '#FFECD1',
+    flexDirection: 'row',
   },
   cardTitle: {
     color: '#000',
     fontFamily: 'Inter-Regular',
     fontSize: 20,
     fontWeight: '400',
-    lineHeight: 24, // Usei um valor numérico para lineHeight
+    lineHeight: 24,
   },
   arrow: {
     color: '#000',
     fontFamily: 'Inter-Regular',
     fontSize: 20,
     fontWeight: '400',
-    lineHeight: 24, // Usei um valor numérico para lineHeight
+    lineHeight: 24,
   },
 });
 

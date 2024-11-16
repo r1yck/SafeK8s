@@ -1,6 +1,6 @@
 import React from "react";
 import { ScrollView, View } from "react-native";
-import Card from "../card"; // Importando o componente Card
+import Card from "../card";
 import styles from "./styles";
 
 type CardListProps = {

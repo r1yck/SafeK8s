@@ -2,21 +2,21 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 10, // Espaçamento entre os componentes
+    marginVertical: 10,
   },
   label: {
-    fontSize: 16, // Tamanho da fonte do título
-    color: '#FFECD1', // Cor do texto do título
-    marginBottom: -10, // Espaçamento entre o título e o input
+    fontSize: 16,
+    color: '#FFECD1',
+    marginBottom: -10,
   },
   input: {
-    height: 48, // Altura do campo de texto
-    backgroundColor: '#FFECD1', // Cor de fundo do input
-    borderColor: '#000', // Cor da borda
-    borderWidth: 1, // Largura da borda
-    borderRadius: 5, // Borda arredondada
-    paddingHorizontal: 10, // Espaçamento dentro do campo de texto
-    color: '#000', // Cor do texto dentro do input
+    height: 48,
+    backgroundColor: '#FFECD1',
+    borderColor: '#000',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    color: '#000',
   },
 });
 
