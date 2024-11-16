@@ -12,12 +12,12 @@ const styles = StyleSheet.create({
     },
     image: {
         display: 'flex',
-        width: 171, // largura da imagem
-        height: 171, // altura da imagem
+        width: 171, 
+        height: 171, 
         justifyContent: 'center',
         alignItems: 'center',
         flexShrink: 0,
-        position: 'absolute', // caso você queira posicioná-la de forma absoluta também
+        position: 'absolute', 
         left: 110,
         right: 0,
         top: 80,
@@ -46,6 +46,10 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-around',
         height: '20%',
+    },
+    containerCheckbox: {
+        top: -45,
+        left: -70,
     },
 });
 

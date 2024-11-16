@@ -40,10 +40,10 @@ const ResetPasswordScreen: React.FC = () => {
           ref={confirmPasswordRef}
           returnKeyType="done"
         />
-        <Button title="Change" className="primary" />
       </View>
       <View style={styles.containerButtons}>
-        <Button title="Voltar para Login" className="transparent" onPress={() => navigation.navigate('Login')} />
+        <Button title="Change" className="primary" />
+        <Button title="Cancel" className="transparent" onPress={() => navigation.navigate('Login')} />
       </View>
     </View>
   );

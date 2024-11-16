@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { TextInput, View, Text, TextInputProps } from 'react-native';
-import styles from './styles'; // Importando os estilos externos
+import styles from './styles';
 
 interface InputProps extends TextInputProps {
   title: string;

@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   button: {
     display: 'flex',
     width: 170,
-    height: 30,
+    height: 30, // Manter a altura original para os outros botões
     padding: 3,
     justifyContent: 'center',
     alignItems: 'center',
@@ -12,22 +12,24 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#000',
-    backgroundColor: '#FFECD1',
+    backgroundColor: '#FFECD1', // Cor padrão do botão
   },
   transparentButton: {
-    backgroundColor: 'transparent',
-    borderColor: 'transparent',
+    backgroundColor: 'transparent', // Torna o fundo transparente
+    borderColor: 'transparent', // Torna a borda transparente
+    height: 50, // Aumenta a altura apenas do botão transparente
   },
   buttonText: {
-    color: 'white',
+    color: '#000', // Cor do texto padrão
     fontSize: 16,
     textAlign: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
   },
   transparentText: {
-    color: 'black',
+    color: 'white', // Cor do texto para o botão transparente
+    fontFamily: 'Inter-Regular',
+    fontSize: 20, // Aumentei o tamanho da fonte apenas para o botão transparente
+    textAlign: 'center',
+    flexWrap: 'wrap', // Permite que o texto quebre para a próxima linha
   },
 });
 
