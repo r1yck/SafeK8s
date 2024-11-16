@@ -44,10 +44,11 @@ const RegisterScreen: React.FC = () => {
           ref={confirmPasswordRef}
           returnKeyType="done"
         />
-        <Button title="Cadastrar" className="primary" />
       </View>
       <View style={styles.containerButtons}>
-        <Button title="Já tem uma conta?" className="transparent" onPress={() => navigation.navigate('Login')} />
+        <Button title="Cadastrar" className="primary" />
+        <Button title="Already have an account?" className="transparent" onPress={() => navigation.navigate('Login')} 
+                style={{ height: 75 }}/>
       </View>
     </View>
   );
