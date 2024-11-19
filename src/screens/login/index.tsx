@@ -7,7 +7,9 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RoutesParams } from '../../navigation/routesParams';
 import styles from './styles';
 import global from '../../styles/global';
-import Select from '../../components/inputs/select'; 
+import Select from '../../components/inputs/select';
+import LoginSchema from '../../validators/login';
+import { Formik } from 'formik';
 
 type loginParamsList = NativeStackNavigationProp<RoutesParams, 'Login'>;
 
@@ -32,25 +34,45 @@ export default function LoginScreen() {
                         <Text style={[global.title, styles.title]}>SafeK8s</Text>
                     </View>
                     <View style={styles.containerForm}>
-                        <Input 
-                            placeholder="USER" 
-                            returnKeyType="next" 
-                            onSubmitEditing={() => passwordRef.current?.focus()} 
-                        />
-                        <Input 
-                            placeholder="PASSWORD" 
-                            secureTextEntry 
-                            ref={passwordRef} 
-                            returnKeyType="done" 
-                        />
+                        <Formik
+                            initialValues={{ username: '', password: '', keepConnected: false }}
+                            validationSchema={LoginSchema}
+                            onSubmit={(values) => alert("Submit Login: " + JSON.stringify(values))}
+                        >
+                            {({ handleChange, handleSubmit, values, errors }) => (
+                                <View>
+                                    <Input
+                                        title="User"
+                                        placeholder="YOUR USER"
+                                        returnKeyType="next"
+                                        onSubmitEditing={() => passwordRef.current?.focus()}
+                                        autoCapitalize="none"
+                                        value={values.username}
+                                        onChangeText={handleChange('username')}
+                                        onBlur={handleChange}
+                                    />
+                                    <Input
+                                        title="Password"
+                                        placeholder="YOUR PASSWORD"
+                                        secureTextEntry
+                                        ref={passwordRef}
+                                        returnKeyType="done"
+                                        value={values.password} 
+                                        onChangeText={handleChange('password')}
+                                        onBlur={handleChange}
+                                    />
+                                </View>
+                            )}
+                        </Formik>
                     </View>
                     <View style={styles.containerCheckbox}>
                         <Select isSelected={isChecked} onToggle={toggleCheckbox} />
                     </View>
                     <View style={styles.containerButtons}>
-                        <Button title="Login" className="primary" onPress={() => navigation.navigate('Dashboard')}/>
+                        {/* Corrigido a forma de chamar handleSubmit */}
+                        <Button title="Login" className="primary" onPress={() => navigation.navigate('Dashboard')} />
                         <Button title="Forgot password" className="transparent" onPress={() => navigation.navigate('ResetPassword')} />
-                        <Button title="Register" className="warning" onPress={() => navigation.navigate('Register')} />
+                        <Button title="Register" className="primary" onPress={() => navigation.navigate('Register')} />
                     </View>
                 </ScrollView>
             </TouchableWithoutFeedback>

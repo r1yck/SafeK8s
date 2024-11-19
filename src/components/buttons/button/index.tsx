@@ -1,7 +1,7 @@
 import { Pressable, Text, StyleSheet, PressableProps } from "react-native";
-import styles from "./styles"; // Certifique-se de importar os estilos corretamente.
+import styles from "./styles";
 
-type StyleKeys = 'primary' | 'negative' | 'positive' | 'transparent'; // Alterado para 'negative' e 'positive'
+type StyleKeys = 'primary' | 'negative' | 'positive' | 'transparent';
 
 interface ButtonProps extends PressableProps {
   title: string;
@@ -9,13 +9,12 @@ interface ButtonProps extends PressableProps {
 }
 
 export default function Button({ title, className, ...rest }: ButtonProps) {
-  // Lógica para aplicar os estilos do botão dependendo do tipo (transparente ou não)
   const buttonStyle = className === 'transparent' 
     ? [styles.button, styles.transparentButton]
     : className === 'negative' 
-      ? [styles.button, styles.negativeButton] // Estilo para o botão negativo
+      ? [styles.button, styles.negativeButton]
       : className === 'positive' 
-        ? [styles.button, styles.positiveButton] // Estilo para o botão positivo
+        ? [styles.button, styles.positiveButton]
         : styles.button;
 
   const textStyle = className === 'transparent' 

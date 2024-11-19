@@ -23,32 +23,36 @@ const RegisterScreen: React.FC = () => {
       </View>
       <View style={styles.containerForm}>
         <Input
-          placeholder="USER"
+          title="Username"
+          placeholder="YOUR USERNAME"
           returnKeyType="next"
           onSubmitEditing={() => passwordRef.current?.focus()}
         />
         <Input
-          placeholder="PASSWORD"
+          title="Password"
+          placeholder="YOUR PASSWORD"
           returnKeyType="next"
           onSubmitEditing={() => passwordRef.current?.focus()}
         />
         <Input
-          placeholder="CONFIRM PASSWORD"
+          title="Confirm Password"
+          placeholder="CONFIRM YOUR PASSWORD"
           secureTextEntry
           ref={passwordRef}
           returnKeyType="next"
           onSubmitEditing={() => confirmPasswordRef.current?.focus()}
         />
         <Input
-          placeholder="FULL NAME"
+          title="Full Name"
+          placeholder="YOUR FULL NAME"
           ref={confirmPasswordRef}
           returnKeyType="done"
         />
       </View>
       <View style={styles.containerButtons}>
         <Button title="Cadastrar" className="primary" />
-        <Button title="Already have an account?" className="transparent" onPress={() => navigation.navigate('Login')} 
-                style={{ height: 75 }}/>
+        <Button title="Already have an account?" className="transparent" onPress={() => navigation.navigate('Login')}
+          style={{ height: 75 }} />
       </View>
     </View>
   );

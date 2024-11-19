@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 20,
     marginBottom: 20,
+    position: 'relative', // Permite que os elementos dentro dele sejam posicionados de forma absoluta
   },
   logo: {
     display: 'flex',
@@ -17,10 +18,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexShrink: 0,
+    top: 62,
+    right: 49,
   },
   logoutButton: {
+    position: 'absolute',
+    top: 83,
+    right: 260, 
     width: 100,
     height: 40,
+    borderRadius: 5, 
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   containerTitle: {
     justifyContent: 'center',

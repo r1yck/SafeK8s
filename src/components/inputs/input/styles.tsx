@@ -7,7 +7,8 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     color: '#FFECD1',
-    marginBottom: -10,
+    marginBottom: 0,
+    
   },
   input: {
     height: 48,
