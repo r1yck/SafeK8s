@@ -45,20 +45,22 @@ export default function DashboardScreen() {
                 <ScrollView contentContainerStyle={global.container} keyboardShouldPersistTaps="handled">
                     <View style={styles.header}>
                         <Image source={require('../../../assets/App-Logo.png')} style={styles.logo} />
-                        <Button title="Logout" className="negative" />
-                    </View>
-
-                    <View style={styles.containerTitle}>
-                        <Text style={[global.title, styles.title]}>My Passwords</Text>
+                        <Button title="Logout" className="negative" style={styles.logoutButton} />
                     </View>
 
                     {/* Search Bar */}
                     <View style={styles.searchContainer}>
                         <TextInput style={styles.searchInput} placeholder="Search" />
                         <TouchableOpacity>
-                            <MaterialIcons name="search" size={24} color="#000" />
+                            <MaterialIcons name="search" size={35} color="#000" />
                         </TouchableOpacity>
                     </View>
+
+                    <View style={styles.containerTitle}>
+                        <Text style={[global.title, styles.title]}>My Passwords</Text>
+                    </View>
+
+                    
 
                     {/* Card List */}
                     <CardList 
@@ -70,7 +72,7 @@ export default function DashboardScreen() {
 
                     {/* Add Button */}
                     <TouchableOpacity style={styles.addButton}>
-                        <MaterialIcons name="add" size={30} color="#fff" />
+                        <MaterialIcons name="add" size={45} color="#000" />
                     </TouchableOpacity>
                 </ScrollView>
             </TouchableWithoutFeedback>

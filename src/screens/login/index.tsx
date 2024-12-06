@@ -42,8 +42,8 @@ export default function LoginScreen() {
                             {({ handleChange, handleSubmit, values, errors }) => (
                                 <View>
                                     <Input
-                                        title="User"
-                                        placeholder="YOUR USER"
+                                        title="Username"
+                                        placeholder="YOUR USERNAME"
                                         returnKeyType="next"
                                         onSubmitEditing={() => passwordRef.current?.focus()}
                                         autoCapitalize="none"

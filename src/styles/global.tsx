@@ -12,7 +12,6 @@ const global = StyleSheet.create({
         fontSize: 32,
         fontWeight: 'bold',
         color: '#FFECD1',
-        textAlign: 'center',
         marginBottom: 20,
     },
     text: {
@@ -36,7 +35,6 @@ const global = StyleSheet.create({
         paddingHorizontal: 32,
         backgroundColor: '#005f6b',
         borderRadius: 5,
-        alignItems: 'center',
     },
     centerAlign: { 
         justifyContent: 'center',

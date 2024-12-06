@@ -6,8 +6,6 @@ const styles = StyleSheet.create({
     width: 170,
     height: 30, // Manter a altura original para os outros botões
     padding: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
     flexShrink: 0,
     borderRadius: 5,
     borderWidth: 1,
@@ -39,8 +37,6 @@ const styles = StyleSheet.create({
     height: 30, // Altura ajustada
     paddingVertical: 3,  // Padding vertical ajustado
     paddingHorizontal: 27, // Padding horizontal ajustado
-    justifyContent: 'center',
-    alignItems: 'center',
     flexShrink: 0,
     borderRadius: 5,
     borderWidth: 1,

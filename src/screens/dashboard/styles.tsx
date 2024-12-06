@@ -8,73 +8,74 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingTop: 20,
-    marginBottom: 20,
-    position: 'relative', // Permite que os elementos dentro dele sejam posicionados de forma absoluta
+    marginBottom: 0,
+    height: 120, // Altura fixa para alinhar os elementos verticalmente
+
   },
   logo: {
-    display: 'flex',
-    width: 98,
-    height: 98,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexShrink: 0,
-    top: 62,
-    right: 49,
+    width: 80,
+    height: 80,
+    resizeMode: 'contain', // Para ajustar a logo dentro da área sem cortar
+    left: -50,
   },
   logoutButton: {
-    position: 'absolute',
-    top: 83,
-    right: 260, 
-    width: 100,
-    height: 40,
-    borderRadius: 5, 
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: 'flex',
+    width: 121, // Largura ajustada
+    height: 30, // Altura ajustada
+    paddingVertical: 3,  // Padding vertical ajustado
+    paddingHorizontal: 27, // Padding horizontal ajustado
+    flexShrink: 0,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#000', // Cor da borda
+    backgroundColor: '#78290F', // Cor de fundo do botão
+    right: -50,
+  },
+  logoutButtonText: {
+    color: '#FFF',
+    fontSize: 14,
+    fontWeight: 'bold',
   },
   containerTitle: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 116,
-    marginTop: 50,
+    justifyContent: 'flex-start',
+    marginBottom: 20,
+    left: -65,
+    bottom: -30,
   },
   title: {
-    display: 'flex',
-    width: 206,          
-    height: 36,          
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexShrink: 0,      
-    color: '#FFF',       
-    fontFamily: 'Inter-Regular', 
-    fontSize: 30,        
-    fontStyle: 'normal', 
-    fontWeight: '400',   
-    lineHeight: 36,      
-    textAlign: 'center', 
+    color: '#FFF',
+    fontFamily: 'Inter-Regular',
+    fontSize: 30,
+    fontWeight: '400',
+    textAlign: 'left'
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#FFECD1',
     borderRadius: 8,
     paddingHorizontal: 8,
     marginVertical: 16,
-    height: 40,
+    height: 48,
+    width: 340,
   },
   searchInput: {
+    fontSize: 20,
     flex: 1,
     height: '100%',
   },
   addButton: {
     position: 'absolute',
     bottom: 20,
-    right: 20,
+    right: 28,
     width: 50,
     height: 50,
     backgroundColor: '#ff8000',
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
+    borderColor: '#000',
+    borderWidth: 1,
   },
 });
 
