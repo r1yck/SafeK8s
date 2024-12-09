@@ -23,16 +23,16 @@ import Button from '../../components/buttons/button';
 type dashboardParamsList = NativeStackNavigationProp<RoutesParams, 'Dashboard'>;
 
 const data = [
-    { id: '1', title: 'TITLE' },
-    { id: '2', title: 'TITLE' },
-    { id: '3', title: 'TITLE' }
+    { id: '1', title: 'Password for Email' },
+    { id: '2', title: 'Password for Banking' },
+    { id: '3', title: 'Social Media Password' }
 ];
 
 export default function DashboardScreen() {
     const navigation = useNavigation<dashboardParamsList>();
 
-    const handleCardPress = (cardTitle: string) => {
-        console.log(`Card Pressed: ${cardTitle}`);
+    const handleCardPress = (cardId: string, cardTitle: string) => {
+        navigation.navigate('Details', { id: cardId, title: cardTitle });
     };
 
     return (
@@ -63,7 +63,7 @@ export default function DashboardScreen() {
                     <CardList 
                         cards={data.map(item => ({
                             title: item.title,
-                            onPress: () => handleCardPress(item.title)
+                            onPress: () => handleCardPress(item.id, item.title)
                         }))}
                     />
 

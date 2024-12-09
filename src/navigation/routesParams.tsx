@@ -4,4 +4,5 @@ export type RoutesParams = {
   Register: undefined;
   Dashboard: undefined;
   New: undefined;
+  Details: { id: string; title: string };
 };

@@ -23,22 +23,22 @@ const ResetPasswordScreen: React.FC = () => {
       </View>
       <View style={styles.containerForm}>
         <Input
-          title="Username"
-          placeholder="YOUR USERNAME"
+          title=""
+          placeholder="USER"
           returnKeyType="next"
           onSubmitEditing={() => passwordRef.current?.focus()}
         />
         <Input
-          title="Password"
-          placeholder="YOUR PASSWORD"
+          title=""
+          placeholder="NEW PASSWORD"
           secureTextEntry
           ref={passwordRef}
           returnKeyType="next"
           onSubmitEditing={() => confirmPasswordRef.current?.focus()}
         />
         <Input
-          title="Confirm Password"
-          placeholder="CONFIRM YOUR PASSWORD"
+          title=""
+          placeholder="CONFIRM NEW PASSWORD"
           secureTextEntry
           ref={confirmPasswordRef}
           returnKeyType="done"
