@@ -45,8 +45,16 @@ const styles = StyleSheet.create({
   },
 
   positiveButton: {
-    backgroundColor: '#FF7D00', // Cor de fundo do botão positivo
-    borderColor: '#FF7D00', // Cor da borda do botão positivo
+    display: 'flex',
+    width: 121, // Largura ajustada
+    height: 30, // Altura ajustada
+    paddingVertical: 3,  // Padding vertical ajustado
+    paddingHorizontal: 27, // Padding horizontal ajustado
+    flexShrink: 0,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#000', // Cor da borda
+    backgroundColor: '#FF7D00', // Cor de fundo do botão
   },
 });
 

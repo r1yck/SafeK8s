@@ -17,6 +17,7 @@ const global = StyleSheet.create({
     text: {
         fontSize: 16,
         color: '#FFECD1',
+        
     },
     input: {
         width: '100%',

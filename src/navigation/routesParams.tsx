@@ -3,4 +3,5 @@ export type RoutesParams = {
   ResetPassword: undefined;
   Register: undefined;
   Dashboard: undefined;
+  New: undefined;
 };

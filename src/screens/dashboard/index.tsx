@@ -33,7 +33,6 @@ export default function DashboardScreen() {
 
     const handleCardPress = (cardTitle: string) => {
         console.log(`Card Pressed: ${cardTitle}`);
-        // Lógica para abrir as informações do card ou navegar para outra tela
     };
 
     return (
@@ -45,7 +44,7 @@ export default function DashboardScreen() {
                 <ScrollView contentContainerStyle={global.container} keyboardShouldPersistTaps="handled">
                     <View style={styles.header}>
                         <Image source={require('../../../assets/App-Logo.png')} style={styles.logo} />
-                        <Button title="Logout" className="negative" style={styles.logoutButton} />
+                        <Button title="Logout" className="negative" style={styles.logoutButton} onPress={() => navigation.navigate('Login')} />
                     </View>
 
                     {/* Search Bar */}
@@ -60,8 +59,6 @@ export default function DashboardScreen() {
                         <Text style={[global.title, styles.title]}>My Passwords</Text>
                     </View>
 
-                    
-
                     {/* Card List */}
                     <CardList 
                         cards={data.map(item => ({
@@ -71,7 +68,10 @@ export default function DashboardScreen() {
                     />
 
                     {/* Add Button */}
-                    <TouchableOpacity style={styles.addButton}>
+                    <TouchableOpacity 
+                        style={styles.addButton} 
+                        onPress={() => navigation.navigate('New')}
+                    >
                         <MaterialIcons name="add" size={45} color="#000" />
                     </TouchableOpacity>
                 </ScrollView>
