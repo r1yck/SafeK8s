@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { 
     View, 
     Text, 
@@ -19,20 +19,22 @@ import global from '../../styles/global';
 import styles from './styles';
 import CardList from '../../components/cards/cardslist';
 import Button from '../../components/buttons/button';
+import { PasswordsContext } from '../../context/PasswordsContext'; // Importa o contexto de senhas
 
 type dashboardParamsList = NativeStackNavigationProp<RoutesParams, 'Dashboard'>;
 
-const data = [
-    { id: '1', title: 'Password for Email' },
-    { id: '2', title: 'Password for Banking' },
-    { id: '3', title: 'Social Media Password' }
-];
-
 export default function DashboardScreen() {
     const navigation = useNavigation<dashboardParamsList>();
+    const { passwords, searchPasswords } = useContext(PasswordsContext); // Obtém senhas e função de busca do contexto
+    const [searchQuery, setSearchQuery] = useState('');
 
     const handleCardPress = (cardId: string, cardTitle: string) => {
         navigation.navigate('Details', { id: cardId, title: cardTitle });
+    };
+
+    const handleSearch = (query: string) => {
+        setSearchQuery(query);
+        searchPasswords(query); // Filtra as senhas no contexto
     };
 
     return (
@@ -44,12 +46,22 @@ export default function DashboardScreen() {
                 <ScrollView contentContainerStyle={global.container} keyboardShouldPersistTaps="handled">
                     <View style={styles.header}>
                         <Image source={require('../../../assets/App-Logo.png')} style={styles.logo} />
-                        <Button title="Logout" className="negative" style={styles.logoutButton} onPress={() => navigation.navigate('Login')} />
+                        <Button 
+                            title="Logout" 
+                            className="negative" 
+                            style={styles.logoutButton} 
+                            onPress={() => navigation.navigate('Login')} 
+                        />
                     </View>
 
                     {/* Search Bar */}
                     <View style={styles.searchContainer}>
-                        <TextInput style={styles.searchInput} placeholder="Search" />
+                        <TextInput 
+                            style={styles.searchInput} 
+                            placeholder="Search" 
+                            value={searchQuery} 
+                            onChangeText={handleSearch} 
+                        />
                         <TouchableOpacity>
                             <MaterialIcons name="search" size={35} color="#000" />
                         </TouchableOpacity>
@@ -61,7 +73,7 @@ export default function DashboardScreen() {
 
                     {/* Card List */}
                     <CardList 
-                        cards={data.map(item => ({
+                        cards={passwords.map(item => ({
                             title: item.title,
                             onPress: () => handleCardPress(item.id, item.title)
                         }))}

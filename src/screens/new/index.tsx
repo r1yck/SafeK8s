@@ -1,123 +1,130 @@
-import React, { useLayoutEffect } from 'react';
-import { View, ScrollView, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import React, { useContext, useLayoutEffect } from 'react';
+import { View, ScrollView, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
-import * as Yup from 'yup'; // Caso queira validar os campos
+import * as Yup from 'yup'; // Validação
 import Input from '../../components/inputs/input';
 import Button from '../../components/buttons/button';
 import styles from './styles';
 import global from '../../styles/global';
+import { PasswordsContext } from '../../context/PasswordsContext';
+import uuid from 'react-native-uuid'; // Para gerar IDs únicos
 
-// Schema de validação (opcional)
+// Schema de validação
 const NewSchema = Yup.object().shape({
-    title: Yup.string().required('Title is required'),
-    link: Yup.string().url('Enter a valid URL').required('Link is required'),
-    email: Yup.string().email('Enter a valid email').required('Email is required'),
-    password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
-    description: Yup.string(),
+  title: Yup.string().required('Title is required'),
+  link: Yup.string().url('Enter a valid URL').required('Link is required'),
+  email: Yup.string().email('Enter a valid email').required('Email is required'),
+  password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+  description: Yup.string(),
 });
 
 export default function NewScreen() {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
+  const { addPassword } = useContext(PasswordsContext);
 
-    // Customizando o cabeçalho
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            title: 'New Password', // Alterando o título
-            headerStyle: {
-                backgroundColor: '#001524', // Cor de fundo do cabeçalho
-            },
-            headerTitleAlign: 'center', // Centralizando o título
-            headerTintColor: '#fff', // Cor do texto do título
-        });
-    }, [navigation]);
+  // Customizando o cabeçalho
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: 'New Password', // Alterando o título
+      headerStyle: {
+        backgroundColor: '#001524', // Cor de fundo do cabeçalho
+      },
+      headerTitleAlign: 'center', // Centralizando o título
+      headerTintColor: '#fff', // Cor do texto do título
+    });
+  }, [navigation]);
 
-    const handleSave = (values: any) => {
-        console.log('Form values:', values);
-        // Adicione lógica para salvar os dados aqui
+  const handleSave = (values: any) => {
+    const newPassword = {
+      ...values,
+      id: uuid.v4(), // Gerando um ID único para a senha
     };
+    addPassword(newPassword); // Salvando no contexto
+    Alert.alert('Success', 'Password saved successfully!');
+    navigation.goBack(); // Voltando à tela anterior
+  };
 
-    return (
-        <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
-            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-                <ScrollView contentContainerStyle={global.container} keyboardShouldPersistTaps="handled">
-                    <View style={styles.header}></View>
-                    <Formik
-                        initialValues={{
-                            title: '',
-                            link: '',
-                            email: '',
-                            password: '',
-                            description: '',
-                        }}
-                        validationSchema={NewSchema}
-                        onSubmit={handleSave}
-                    >
-                        {({ handleChange, handleSubmit, values, errors, touched }) => (
-                            <View style={styles.form}>
-                                <View style={styles.row}>
-                                    <Input
-                                        title=""
-                                        placeholder="TITLE"
-                                        value={values.title}
-                                        onChangeText={handleChange('title')}
-                                        error={touched.title && errors.title ? errors.title : undefined}
-                                        style={[global.input, { width: 161 }]}
-                                    />
-                                    <Input
-                                        title=""
-                                        placeholder="LINK"
-                                        value={values.link}
-                                        onChangeText={handleChange('link')}
-                                        error={touched.title && errors.title ? errors.title : undefined}
-                                        style={[global.input, { width: 161 }]}
-                                    />
-                                </View>
-                                <Input
-                                    title=""
-                                    placeholder="EMAIL"
-                                    value={values.email}
-                                    onChangeText={handleChange('email')}
-                                    error={touched.title && errors.title ? errors.title : undefined}
-                                />
-                                <Input
-                                    title=""
-                                    placeholder="PASSWORD"
-                                    secureTextEntry
-                                    value={values.password}
-                                    onChangeText={handleChange('password')}
-                                    error={touched.title && errors.title ? errors.title : undefined}
-                                />
-                                <Input
-                                    title=""
-                                    placeholder="DESCRIPTION"
-                                    multiline
-                                    numberOfLines={4}
-                                    value={values.description}
-                                    onChangeText={handleChange('description')}
-                                    error={touched.title && errors.title ? errors.title : undefined}
-                                />
-                                {/* Usando flexGrow para empurrar os botões para baixo */}
-                                <View style={styles.buttonsContainer}>
-                                    <Button
-                                        title="Cancel"
-                                        className="negative"
-                                        onPress={() => navigation.goBack()}
-                                    />
-                                    <Button
-                                        title="Save"
-                                        className="positive"
-                                        onPress={() => handleSubmit()}
-                                    />
-                                </View>
-                            </View>
-                        )}
-                    </Formik>
-                </ScrollView>
-            </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
-    );
+  return (
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <ScrollView contentContainerStyle={global.container} keyboardShouldPersistTaps="handled">
+          <View style={styles.header}></View>
+          <Formik
+            initialValues={{
+              title: '',
+              link: '',
+              email: '',
+              password: '',
+              description: '',
+            }}
+            validationSchema={NewSchema}
+            onSubmit={handleSave}
+          >
+            {({ handleChange, handleSubmit, values, errors, touched }) => (
+              <View style={styles.form}>
+                <View style={styles.row}>
+                  <Input
+                    title=""
+                    placeholder="TITLE"
+                    value={values.title}
+                    onChangeText={handleChange('title')}
+                    error={touched.title && errors.title ? errors.title : undefined}
+                    style={[global.input, { width: 161 }]}
+                  />
+                  <Input
+                    title=""
+                    placeholder="LINK"
+                    value={values.link}
+                    onChangeText={handleChange('link')}
+                    error={touched.link && errors.link ? errors.link : undefined}
+                    style={[global.input, { width: 161 }]}
+                  />
+                </View>
+                <Input
+                  title=""
+                  placeholder="EMAIL"
+                  value={values.email}
+                  onChangeText={handleChange('email')}
+                  error={touched.email && errors.email ? errors.email : undefined}
+                />
+                <Input
+                  title=""
+                  placeholder="PASSWORD"
+                  secureTextEntry
+                  value={values.password}
+                  onChangeText={handleChange('password')}
+                  error={touched.password && errors.password ? errors.password : undefined}
+                />
+                <Input
+                  title=""
+                  placeholder="DESCRIPTION"
+                  multiline
+                  numberOfLines={4}
+                  value={values.description}
+                  onChangeText={handleChange('description')}
+                  error={touched.description && errors.description ? errors.description : undefined}
+                />
+                <View style={styles.buttonsContainer}>
+                  <Button
+                    title="Cancel"
+                    className="negative"
+                    onPress={() => navigation.goBack()}
+                  />
+                  <Button
+                    title="Save"
+                    className="positive"
+                    onPress={() => handleSubmit()}
+                  />
+                </View>
+              </View>
+            )}
+          </Formik>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
+  );
 }

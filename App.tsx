@@ -3,6 +3,7 @@ import { SafeAreaView, StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
 import AppNavigation from './src/navigation/AppNavigation';
 import { AuthProvider } from './src/context/authContext'; // Importa o AuthProvider
+import { PasswordsProvider } from './src/context/PasswordsContext'; // Importa o PasswordsProvider
 
 const App: React.FC = () => {
   const [fontsLoaded] = useFonts({
@@ -15,9 +16,11 @@ const App: React.FC = () => {
 
   return (
     <AuthProvider>
-      <SafeAreaView style={styles.container}>
-        <AppNavigation />
-      </SafeAreaView>
+      <PasswordsProvider>
+        <SafeAreaView style={styles.container}>
+          <AppNavigation />
+        </SafeAreaView>
+      </PasswordsProvider>
     </AuthProvider>
   );
 };
