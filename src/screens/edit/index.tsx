@@ -1,14 +1,26 @@
 import React, { useLayoutEffect } from 'react';
 import { View, ScrollView, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native'; // Agora, usamos useRoute para pegar os dados da senha
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { Formik } from 'formik';
-import * as Yup from 'yup'; // Schema de validação
+import * as Yup from 'yup';
 import Input from '../../components/inputs/input';
 import Button from '../../components/buttons/button';
 import styles from './styles';
 import global from '../../styles/global';
 
-// Schema de validação (opcional)
+// Tipagem dos parâmetros da rota
+type EditScreenRouteParams = {
+    params: {
+        passwordData: {
+            title: string;
+            link: string;
+            email: string;
+            password: string;
+            description: string;
+        };
+    };
+};
+
 const EditSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
     link: Yup.string().url('Enter a valid URL').required('Link is required'),
@@ -19,37 +31,31 @@ const EditSchema = Yup.object().shape({
 
 export default function EditScreen() {
     const navigation = useNavigation();
-    const route = useRoute();  // Usamos useRoute para pegar os parâmetros passados, como a senha a ser editada
-    const { passwordData } = route.params; // Aqui assumimos que você está passando os dados da senha através dos parâmetros
+    const route = useRoute<RouteProp<EditScreenRouteParams, 'params'>>();
+    const { passwordData } = route.params;
 
-    // Customizando o cabeçalho
     useLayoutEffect(() => {
         navigation.setOptions({
-            title: 'Edit Password', // Alterando o título para 'Edit Password'
-            headerStyle: {
-                backgroundColor: '#001524', // Cor de fundo do cabeçalho
-            },
-            headerTitleAlign: 'center', // Centralizando o título
-            headerTintColor: '#fff', // Cor do texto do título
+            title: 'Edit Password',
+            headerStyle: { backgroundColor: '#001524' },
+            headerTitleAlign: 'center',
+            headerTintColor: '#fff',
         });
     }, [navigation]);
 
     const handleSave = (values: any) => {
         console.log('Updated values:', values);
-        // Adicione lógica para salvar os dados aqui, como enviar para o backend
+        // Adicione lógica para salvar os dados aqui
     };
 
     return (
-        <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
+        <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <ScrollView contentContainerStyle={global.container} keyboardShouldPersistTaps="handled">
                     <View style={styles.header}></View>
                     <Formik
                         initialValues={{
-                            title: passwordData.title, // Preenche os dados existentes
+                            title: passwordData.title,
                             link: passwordData.link,
                             email: passwordData.email,
                             password: passwordData.password,
@@ -62,45 +68,45 @@ export default function EditScreen() {
                             <View style={styles.form}>
                                 <View style={styles.row}>
                                     <Input
-                                        title=""
+                                        title="TITLE"
                                         placeholder="TITLE"
                                         value={values.title}
                                         onChangeText={handleChange('title')}
-                                        errorMessage={touched.title && errors.title}
+                                        error={touched.title && errors.title ? errors.title : undefined}
                                         style={[global.input, { width: 161 }]}
                                     />
                                     <Input
-                                        title=""
+                                        title="LINK"
                                         placeholder="LINK"
                                         value={values.link}
                                         onChangeText={handleChange('link')}
-                                        errorMessage={touched.link && errors.link}
+                                        error={touched.link && errors.link ? errors.link : undefined}
                                         style={[global.input, { width: 161 }]}
                                     />
                                 </View>
                                 <Input
-                                    title=""
+                                    title="EMAIL"
                                     placeholder="EMAIL"
                                     value={values.email}
                                     onChangeText={handleChange('email')}
-                                    errorMessage={touched.email && errors.email}
+                                    error={touched.email && errors.email ? errors.email : undefined}
                                 />
                                 <Input
-                                    title=""
+                                    title="PASSWORD"
                                     placeholder="PASSWORD"
                                     secureTextEntry
                                     value={values.password}
                                     onChangeText={handleChange('password')}
-                                    errorMessage={touched.password && errors.password}
+                                    error={touched.password && errors.password ? errors.password : undefined}
                                 />
                                 <Input
-                                    title=""
+                                    title="DESCRIPTION"
                                     placeholder="DESCRIPTION"
                                     multiline
                                     numberOfLines={4}
                                     value={values.description}
                                     onChangeText={handleChange('description')}
-                                    errorMessage={touched.description && errors.description}
+                                    error={touched.description && errors.description ? errors.description : undefined}
                                 />
                                 <View style={styles.buttonsContainer}>
                                     <Button
@@ -111,7 +117,7 @@ export default function EditScreen() {
                                     <Button
                                         title="Save"
                                         className="positive"
-                                        onPress={handleSubmit}
+                                        onPress={() => handleSubmit()}
                                     />
                                 </View>
                             </View>

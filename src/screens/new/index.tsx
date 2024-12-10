@@ -64,7 +64,7 @@ export default function NewScreen() {
                                         placeholder="TITLE"
                                         value={values.title}
                                         onChangeText={handleChange('title')}
-                                        errorMessage={touched.title && errors.title}
+                                        error={touched.title && errors.title ? errors.title : undefined}
                                         style={[global.input, { width: 161 }]}
                                     />
                                     <Input
@@ -72,7 +72,7 @@ export default function NewScreen() {
                                         placeholder="LINK"
                                         value={values.link}
                                         onChangeText={handleChange('link')}
-                                        errorMessage={touched.link && errors.link}
+                                        error={touched.title && errors.title ? errors.title : undefined}
                                         style={[global.input, { width: 161 }]}
                                     />
                                 </View>
@@ -81,7 +81,7 @@ export default function NewScreen() {
                                     placeholder="EMAIL"
                                     value={values.email}
                                     onChangeText={handleChange('email')}
-                                    errorMessage={touched.email && errors.email}
+                                    error={touched.title && errors.title ? errors.title : undefined}
                                 />
                                 <Input
                                     title=""
@@ -89,7 +89,7 @@ export default function NewScreen() {
                                     secureTextEntry
                                     value={values.password}
                                     onChangeText={handleChange('password')}
-                                    errorMessage={touched.password && errors.password}
+                                    error={touched.title && errors.title ? errors.title : undefined}
                                 />
                                 <Input
                                     title=""
@@ -98,7 +98,7 @@ export default function NewScreen() {
                                     numberOfLines={4}
                                     value={values.description}
                                     onChangeText={handleChange('description')}
-                                    errorMessage={touched.description && errors.description}
+                                    error={touched.title && errors.title ? errors.title : undefined}
                                 />
                                 {/* Usando flexGrow para empurrar os botões para baixo */}
                                 <View style={styles.buttonsContainer}>
@@ -110,7 +110,7 @@ export default function NewScreen() {
                                     <Button
                                         title="Save"
                                         className="positive"
-                                        onPress={handleSubmit}
+                                        onPress={() => handleSubmit()}
                                     />
                                 </View>
                             </View>

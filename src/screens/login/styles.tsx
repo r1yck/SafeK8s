@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
     },
     containerCheckbox: {
         top: -45,
-        left: -70,
     },
 });
 

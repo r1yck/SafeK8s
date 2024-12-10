@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, TextInput, Image, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, Text, TextInput, Image, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import Input from '../../components/inputs/input';
 import Button from '../../components/buttons/button';
 import { useNavigation } from '@react-navigation/native';
@@ -10,6 +10,7 @@ import global from '../../styles/global';
 import Select from '../../components/inputs/select';
 import LoginSchema from '../../validators/login';
 import { Formik } from 'formik';
+import { useAuth } from '../../context/authContext';
 
 type loginParamsList = NativeStackNavigationProp<RoutesParams, 'Login'>;
 
@@ -17,9 +18,20 @@ export default function LoginScreen() {
     const navigation = useNavigation<loginParamsList>();
     const passwordRef = useRef<TextInput>(null);
     const [isChecked, setIsChecked] = useState(false);
+    const { login } = useAuth();
 
     const toggleCheckbox = () => {
-        setIsChecked(prevState => !prevState);
+        setIsChecked((prevState) => !prevState);
+    };
+
+    const validateUsername = (username: string) => {
+        if (username.trim() === "") {
+            return "Nome de usuário não pode estar vazio.";
+        }
+        if (/[^a-zA-Z0-9]/.test(username)) {
+            return "Nome de usuário pode conter apenas letras e números.";
+        }
+        return "";
     };
 
     return (
@@ -33,14 +45,28 @@ export default function LoginScreen() {
                     <View style={styles.containerTitle}>
                         <Text style={[global.title, styles.title]}>SafeK8s</Text>
                     </View>
-                    <View style={styles.containerForm}>
-                        <Formik
-                            initialValues={{ username: '', password: '', keepConnected: false }}
-                            validationSchema={LoginSchema}
-                            onSubmit={(values) => alert("Submit Login: " + JSON.stringify(values))}
-                        >
-                            {({ handleChange, handleSubmit, values, errors }) => (
-                                <View>
+                    <Formik
+                        initialValues={{ username: '', password: '', keepConnected: false }}
+                        validationSchema={LoginSchema}
+                        onSubmit={async (values) => {
+                            // Validação do username
+                            const usernameError = validateUsername(values.username);
+                            if (usernameError) {
+                                Alert.alert('Erro', usernameError);
+                                return;
+                            }
+
+                            try {
+                                await login(values.username, values.password, values.keepConnected);
+                                navigation.navigate('Dashboard');
+                            } catch (error: any) {
+                                Alert.alert('Erro', error.message);
+                            }
+                        }}
+                    >
+                        {({ handleChange, handleSubmit, values }) => (
+                            <View>
+                                <View style={styles.containerForm}>
                                     <Input
                                         title=""
                                         placeholder="USER"
@@ -49,7 +75,6 @@ export default function LoginScreen() {
                                         autoCapitalize="none"
                                         value={values.username}
                                         onChangeText={handleChange('username')}
-                                        onBlur={handleChange}
                                     />
                                     <Input
                                         title=""
@@ -57,23 +82,30 @@ export default function LoginScreen() {
                                         secureTextEntry
                                         ref={passwordRef}
                                         returnKeyType="done"
-                                        value={values.password} 
+                                        value={values.password}
                                         onChangeText={handleChange('password')}
-                                        onBlur={handleChange}
                                     />
                                 </View>
-                            )}
-                        </Formik>
-                    </View>
-                    <View style={styles.containerCheckbox}>
-                        <Select isSelected={isChecked} onToggle={toggleCheckbox} />
-                    </View>
-                    <View style={styles.containerButtons}>
-                        {/* Corrigido a forma de chamar handleSubmit */}
-                        <Button title="Login" className="primary" onPress={() => navigation.navigate('Dashboard')} />
-                        <Button title="Forgot password" className="transparent" onPress={() => navigation.navigate('ResetPassword')} />
-                        <Button title="Register" className="primary" onPress={() => navigation.navigate('Register')} />
-                    </View>
+                                <View style={styles.containerCheckbox}>
+                                    <Select isSelected={isChecked} onToggle={toggleCheckbox} />
+                                </View>
+                                <View style={styles.containerButtons}>
+                                    <Button title="Login" className="primary" onPress={() => handleSubmit()} />
+                                    <Button
+                                        title="Forgot password"
+                                        className="transparent"
+                                        onPress={() => navigation.navigate('ResetPassword')}
+                                    />
+                                    <Button
+                                        title="Register"
+                                        className="primary"
+                                        onPress={() => navigation.navigate('Register')}
+                                    />
+                                </View>
+                            </View>
+                        )}
+                    </Formik>
+
                 </ScrollView>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
