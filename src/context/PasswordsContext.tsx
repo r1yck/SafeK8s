@@ -13,40 +13,75 @@ interface Password {
 interface PasswordsContextData {
   passwords: Password[];
   addPassword: (password: Password) => void;
-  searchPasswords: (query: string) => void; // Adiciona a função de busca
+  deletePassword: (id: string) => void; // Função para deletar senha
+  editPassword: (id: string, updatedPassword: Partial<Password>) => void; // Função para editar senha
+  searchPasswords: (query: string) => void;
 }
 
 export const PasswordsContext = createContext<PasswordsContextData>({} as PasswordsContextData);
 
 export function PasswordsProvider({ children }: { children: ReactNode }) {
   const [passwords, setPasswords] = useState<Password[]>([]);
-  const [originalPasswords, setOriginalPasswords] = useState<Password[]>([]); // Armazena todas as senhas originais
+  const [originalPasswords, setOriginalPasswords] = useState<Password[]>([]);
 
   useEffect(() => {
     const loadPasswords = async () => {
-      const storedPasswords = await AsyncStorage.getItem('@passwords');
-      if (storedPasswords) {
-        const parsedPasswords = JSON.parse(storedPasswords);
-        setPasswords(parsedPasswords);
-        setOriginalPasswords(parsedPasswords); // Carrega na lista original também
+      try {
+        const storedPasswords = await AsyncStorage.getItem('@passwords');
+        if (storedPasswords) {
+          const parsedPasswords = JSON.parse(storedPasswords);
+          // Verificação simples para garantir que os dados estão no formato correto
+          if (Array.isArray(parsedPasswords)) {
+            setPasswords(parsedPasswords);
+            setOriginalPasswords(parsedPasswords);
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao carregar as senhas do AsyncStorage:', error);
       }
     };
     loadPasswords();
   }, []);
 
   const addPassword = async (password: Password) => {
-    const updatedPasswords = [...passwords, password];
-    setPasswords(updatedPasswords);
-    setOriginalPasswords(updatedPasswords); // Atualiza a lista original também
-    await AsyncStorage.setItem('@passwords', JSON.stringify(updatedPasswords));
+    try {
+      const updatedPasswords = [...passwords, password];
+      setPasswords(updatedPasswords);
+      setOriginalPasswords(updatedPasswords);
+      await AsyncStorage.setItem('@passwords', JSON.stringify(updatedPasswords));
+    } catch (error) {
+      console.error('Erro ao adicionar senha no AsyncStorage:', error);
+    }
+  };
+
+  const deletePassword = async (id: string) => {
+    try {
+      const updatedPasswords = passwords.filter(password => password.id !== id);
+      setPasswords(updatedPasswords);
+      setOriginalPasswords(updatedPasswords);
+      await AsyncStorage.setItem('@passwords', JSON.stringify(updatedPasswords));
+    } catch (error) {
+      console.error('Erro ao deletar senha no AsyncStorage:', error);
+    }
+  };
+
+  const editPassword = async (id: string, updatedPassword: Partial<Password>) => {
+    try {
+      const updatedPasswords = passwords.map(password =>
+        password.id === id ? { ...password, ...updatedPassword } : password
+      );
+      setPasswords(updatedPasswords);
+      setOriginalPasswords(updatedPasswords);
+      await AsyncStorage.setItem('@passwords', JSON.stringify(updatedPasswords));
+    } catch (error) {
+      console.error('Erro ao editar senha no AsyncStorage:', error);
+    }
   };
 
   const searchPasswords = (query: string) => {
     if (query.trim() === '') {
-      // Se a busca estiver vazia, restaura a lista original
       setPasswords(originalPasswords);
     } else {
-      // Filtra as senhas com base no título ou descrição
       const filteredPasswords = originalPasswords.filter(password =>
         password.title.toLowerCase().includes(query.toLowerCase()) ||
         (password.description && password.description.toLowerCase().includes(query.toLowerCase()))
@@ -56,7 +91,9 @@ export function PasswordsProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <PasswordsContext.Provider value={{ passwords, addPassword, searchPasswords }}>
+    <PasswordsContext.Provider
+      value={{ passwords, addPassword, deletePassword, editPassword, searchPasswords }}
+    >
       {children}
     </PasswordsContext.Provider>
   );

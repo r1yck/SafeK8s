@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useContext, useLayoutEffect } from 'react';
 import { View, ScrollView, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { Formik } from 'formik';
@@ -7,19 +7,10 @@ import Input from '../../components/inputs/input';
 import Button from '../../components/buttons/button';
 import styles from './styles';
 import global from '../../styles/global';
+import { PasswordsContext } from '../../context/PasswordsContext';
+import { RoutesParams } from '../../navigation/routesParams';
 
-// Tipagem dos parâmetros da rota
-type EditScreenRouteParams = {
-    params: {
-        passwordData: {
-            title: string;
-            link: string;
-            email: string;
-            password: string;
-            description: string;
-        };
-    };
-};
+type EditScreenRouteParams = RouteProp<RoutesParams, 'EditScreen'>;
 
 const EditSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
@@ -31,8 +22,9 @@ const EditSchema = Yup.object().shape({
 
 export default function EditScreen() {
     const navigation = useNavigation();
-    const route = useRoute<RouteProp<EditScreenRouteParams, 'params'>>();
-    const { passwordData } = route.params;
+    const route = useRoute<EditScreenRouteParams>();
+    const { id, title, link, email, password, description } = route.params.passwordData;
+    const { editPassword } = useContext(PasswordsContext);
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -44,23 +36,16 @@ export default function EditScreen() {
     }, [navigation]);
 
     const handleSave = (values: any) => {
-        console.log('Updated values:', values);
-        // Adicione lógica para salvar os dados aqui
+        editPassword(id, values);  // Chama a função editPassword
+        navigation.goBack();
     };
 
     return (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <ScrollView contentContainerStyle={global.container} keyboardShouldPersistTaps="handled">
-                    <View style={styles.header}></View>
                     <Formik
-                        initialValues={{
-                            title: passwordData.title,
-                            link: passwordData.link,
-                            email: passwordData.email,
-                            password: passwordData.password,
-                            description: passwordData.description,
-                        }}
+                        initialValues={{ title, link, email, password, description }}
                         validationSchema={EditSchema}
                         onSubmit={handleSave}
                     >
@@ -109,16 +94,8 @@ export default function EditScreen() {
                                     error={touched.description && errors.description ? errors.description : undefined}
                                 />
                                 <View style={styles.buttonsContainer}>
-                                    <Button
-                                        title="Cancel"
-                                        className="negative"
-                                        onPress={() => navigation.goBack()}
-                                    />
-                                    <Button
-                                        title="Save"
-                                        className="positive"
-                                        onPress={() => handleSubmit()}
-                                    />
+                                    <Button title="Cancel" className="negative" onPress={() => navigation.goBack()} />
+                                    <Button title="Save" className="positive" onPress={() => handleSubmit()} />
                                 </View>
                             </View>
                         )}

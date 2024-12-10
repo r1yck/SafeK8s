@@ -29,7 +29,13 @@ export default function DashboardScreen() {
     const [searchQuery, setSearchQuery] = useState('');
 
     const handleCardPress = (cardId: string, cardTitle: string) => {
-        navigation.navigate('Details', { id: cardId, title: cardTitle });
+        // Encontre o objeto completo de senha usando o id
+        const passwordData = passwords.find(password => password.id === cardId);
+        
+        if (passwordData) {
+            // Passando o objeto completo para a tela Details
+            navigation.navigate('Details', { passwordData });
+        }
     };
 
     const handleSearch = (query: string) => {

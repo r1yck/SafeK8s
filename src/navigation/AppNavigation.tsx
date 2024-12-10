@@ -7,6 +7,7 @@ import RegisterScreen from '../screens/register';
 import DashboardScreen from '../screens/dashboard';
 import NewScreen from '../screens/new';
 import DetailsScreen from '../screens/details'; // Importe a DetailsScreen
+import EditScreen from '../screens/edit'; // Importe a tela de edição
 import { RoutesParams } from './routesParams';
 
 const Stack = createNativeStackNavigator<RoutesParams>();
@@ -43,13 +44,20 @@ const AppNavigation: React.FC = () => {
             title: 'Create New Item',
           }}
         />
-        {/* Configuração da DetailsScreen */}
         <Stack.Screen
           name="Details"
           component={DetailsScreen} // Componente da tela de detalhes
           options={{
             headerShown: true, // Mostra o cabeçalho
             title: 'Details', // Título da tela
+          }}
+        />
+        <Stack.Screen
+          name="EditScreen"
+          component={EditScreen}
+          options={{
+            headerShown: true,
+            title: 'Edit Item',
           }}
         />
       </Stack.Navigator>
