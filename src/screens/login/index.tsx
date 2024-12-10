@@ -49,7 +49,6 @@ export default function LoginScreen() {
                         initialValues={{ username: '', password: '', keepConnected: false }}
                         validationSchema={LoginSchema}
                         onSubmit={async (values) => {
-                            // Validação do username
                             const usernameError = validateUsername(values.username);
                             if (usernameError) {
                                 Alert.alert('Erro', usernameError);
@@ -64,7 +63,7 @@ export default function LoginScreen() {
                             }
                         }}
                     >
-                        {({ handleChange, handleSubmit, values }) => (
+                        {({ handleChange, handleSubmit, values, setFieldValue }) => (
                             <View>
                                 <View style={styles.containerForm}>
                                     <Input
@@ -87,7 +86,11 @@ export default function LoginScreen() {
                                     />
                                 </View>
                                 <View style={styles.containerCheckbox}>
-                                    <Select isSelected={isChecked} onToggle={toggleCheckbox} />
+                                    {/* Vincular o estado do Formik ao Select */}
+                                    <Select
+                                        isSelected={values.keepConnected}
+                                        onToggle={() => setFieldValue('keepConnected', !values.keepConnected)}
+                                    />
                                 </View>
                                 <View style={styles.containerButtons}>
                                     <Button title="Login" className="primary" onPress={() => handleSubmit()} />
@@ -105,6 +108,7 @@ export default function LoginScreen() {
                             </View>
                         )}
                     </Formik>
+
 
                 </ScrollView>
             </TouchableWithoutFeedback>

@@ -40,16 +40,17 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         height: '70%',
         width: '90%',
-        paddingBottom: 50,
+        paddingBottom: 30,
     },
     containerButtons: {
         ...global.centerAlign,
         flexDirection: 'column',
         justifyContent: 'space-around',
         height: '20%',
+        top: 20,
     },
     containerCheckbox: {
-        top: -45,
+        top: -25,
     },
 });
 

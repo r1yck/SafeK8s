@@ -17,12 +17,17 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: '#FFF',
     backgroundColor: '#FFECD1',
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  selected: {
-    backgroundColor: '#FFECD1',
-    borderColor: '#000', 
+  checkmark: {
+    color: '#000', // Cor do "visto"
+    fontSize: 16,  // Tamanho do "visto"
+    fontWeight: 'bold',
+    bottom: 3,
   },
   text: {
     color: '#FFF',

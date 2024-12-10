@@ -11,7 +11,9 @@ const Select: React.FC<SelectProps> = ({ isSelected, onToggle }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onToggle} style={styles.checkboxContainer}>
-        <View style={[styles.checkbox, isSelected && styles.selected]} />
+        <View style={styles.checkbox}>
+          {isSelected && <Text style={styles.checkmark}>✔</Text>}
+        </View>
       </TouchableOpacity>
       <Text style={styles.text}>Keep me logged in</Text>
     </View>
