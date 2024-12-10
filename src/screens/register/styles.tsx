@@ -38,12 +38,14 @@ const styles = StyleSheet.create({
     height: '90%',
     width: '90%',
     paddingBottom: 0,
+    bottom: 30,
   },
   containerButtons: {
     ...global.centerAlign,
     flexDirection: 'column',
     justifyContent: 'space-around',
     height: '20%',
+    bottom: 30,
   },
 });
 
