@@ -15,7 +15,7 @@ const RegisterSchema = object({
     .min(6, "A senha deve ter pelo menos 6 caracteres."),
   confirmPassword: string()
     .trim()
-    .oneOf([ref('password')], "As senhas não coincidem.") // Remover o null aqui
+    .oneOf([ref('password')], "As senhas não coincidem.") 
     .required("Confirmação de senha é obrigatória.")
 });
 

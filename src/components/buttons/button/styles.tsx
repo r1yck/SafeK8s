@@ -2,7 +2,6 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   button: {
-    display: 'flex',
     width: 170,
     height: 30, // Manter a altura original para os outros botões
     padding: 3,
