@@ -11,7 +11,7 @@ import {
     TouchableOpacity, 
     Image 
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { MaterialIcons } from '@expo/vector-icons';
 import { RoutesParams } from '../../navigation/routesParams';
@@ -20,6 +20,7 @@ import styles from './styles';
 import CardList from '../../components/cards/cardslist';
 import Button from '../../components/buttons/button';
 import { PasswordsContext } from '../../context/PasswordsContext'; // Importa o contexto de senhas
+import { useCallback } from 'react';
 
 type dashboardParamsList = NativeStackNavigationProp<RoutesParams, 'Dashboard'>;
 
@@ -28,7 +29,14 @@ export default function DashboardScreen() {
     const { passwords, searchPasswords } = useContext(PasswordsContext); // Obtém senhas e função de busca do contexto
     const [searchQuery, setSearchQuery] = useState('');
 
-    const handleCardPress = (cardId: string, cardTitle: string) => {
+    // Atualizar a lista de senhas ao retornar para a tela
+    useFocusEffect(
+        useCallback(() => {
+            searchPasswords(searchQuery); // Garante que a busca está atualizada
+        }, [searchQuery, searchPasswords])
+    );
+
+    const handleCardPress = (cardId: string) => {
         // Encontre o objeto completo de senha usando o id
         const passwordData = passwords.find(password => password.id === cardId);
         
@@ -81,7 +89,7 @@ export default function DashboardScreen() {
                     <CardList 
                         cards={passwords.map(item => ({
                             title: item.title,
-                            onPress: () => handleCardPress(item.id, item.title)
+                            onPress: () => handleCardPress(item.id)
                         }))}
                     />
 

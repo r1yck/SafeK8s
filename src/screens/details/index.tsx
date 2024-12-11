@@ -1,5 +1,5 @@
 import React, { useContext, useLayoutEffect, useState, useEffect } from 'react';
-import { View, ScrollView, TouchableOpacity, Alert} from 'react-native';
+import { View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Input from '../../components/inputs/input';
 import Button from '../../components/buttons/button';
@@ -12,7 +12,6 @@ import { RoutesParams } from '../../navigation/routesParams';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as SecureStore from 'expo-secure-store';
 import * as Clipboard from 'expo-clipboard';
-
 
 type DetailsScreenNavigationProp = StackNavigationProp<RoutesParams, 'Details'>;
 type DetailsScreenRouteProp = RouteProp<RoutesParams, 'Details'>;
@@ -28,45 +27,43 @@ export default function DetailsScreen() {
 
     const [decryptedPassword, setDecryptedPassword] = useState<string | null>(null);
     const [showPassword, setShowPassword] = useState(false);
-    const [loading, setLoading] = useState(false); // Estado de carregamento
+    const [loading, setLoading] = useState(false);
 
     // Função para descriptografar a senha
-    const decryptPassword = async (encryptedPassword: string) => {
-        setLoading(true); // Começar carregamento
+    const decryptPassword = async () => {
+        setLoading(true);
         try {
-            console.log('Tentando recuperar a senha usando a chave:', encryptedPassword); // Log para depuração
-            const decrypted = await SecureStore.getItemAsync(encryptedPassword);
+            console.log('Tentando recuperar a senha usando a chave:', id); // Corrigido para usar `id` como chave
+            const decrypted = await SecureStore.getItemAsync(id);
 
             if (decrypted) {
                 setDecryptedPassword(decrypted);
-                console.log('Senha descriptografada com sucesso:', decrypted); // Log para depuração
+                console.log('Senha descriptografada com sucesso:', decrypted);
             } else {
                 console.error('Erro ao descriptografar a senha: Nenhum valor encontrado');
-                setDecryptedPassword(null); // Se não encontrar, mantemos null
+                setDecryptedPassword(null);
             }
         } catch (error) {
             console.error('Erro ao recuperar a senha:', error);
-            setDecryptedPassword(null); // Caso ocorra erro
+            setDecryptedPassword(null);
         } finally {
-            setLoading(false); // Fim do carregamento
+            setLoading(false);
         }
     };
 
-    // Descriptografando a senha assim que os dados do passwordData são recebidos
     useEffect(() => {
-        if (password) {
-            decryptPassword(password); // Passando a chave da senha
-        }
-    }, [password]);
+        decryptPassword();
+    }, []);
 
     const handleCopyToClipboard = (text: string) => {
-        Clipboard.setString(text);
-        Alert.alert('Copied!', 'The text has been copied to the clipboard.');
+        if (text) {
+            Clipboard.setString(text);
+            Alert.alert('Copiado!', 'O texto foi copiado para a área de transferência.');
+        } else {
+            Alert.alert('Erro', 'Nada para copiar!');
+        }
     };
-    
-    
 
-    // Configuração do cabeçalho
     useLayoutEffect(() => {
         navigation.setOptions({
             title: title || 'Details',
@@ -78,16 +75,16 @@ export default function DetailsScreen() {
 
     const handleDelete = () => {
         Alert.alert(
-            'Confirm Delete',
-            'Are you sure you want to delete this password?',
+            'Confirmar Exclusão',
+            'Você tem certeza que deseja excluir essa senha?',
             [
-                { text: 'Cancel', style: 'cancel' },
+                { text: 'Cancelar', style: 'cancel' },
                 {
-                    text: 'Delete',
+                    text: 'Excluir',
                     style: 'destructive',
                     onPress: () => {
-                        deletePassword(id); // Delete password using the context
-                        navigation.goBack(); // Navigate back after deletion
+                        deletePassword(id);
+                        navigation.goBack();
                     },
                 },
             ]
@@ -102,7 +99,6 @@ export default function DetailsScreen() {
 
     return (
         <ScrollView contentContainerStyle={[global.container, styles.container]}>
-            {/* EMAIL */}
             <View style={styles.inputRow}>
                 <Input title="" placeholder="EMAIL" editable={false} value={email} style={styles.inputStyle} />
                 <TouchableOpacity style={styles.iconButton} onPress={() => handleCopyToClipboard(email)}>
@@ -110,18 +106,17 @@ export default function DetailsScreen() {
                 </TouchableOpacity>
             </View>
 
-            {/* PASSWORD */}
             <View style={styles.inputRow}>
                 <Input
                     title="Password"
                     placeholder="PASSWORD"
                     editable={false}
-                    secureTextEntry={!showPassword} // Muda a visibilidade com base no estado showPassword
-                    value={loading ? "Loading..." : decryptedPassword || "PASSWORD"} // Exibe a senha descriptografada ou um texto de carregamento
-                    style={[styles.inputStyle, { paddingRight: 40 }]} // Adiciona um espaço à direita para o ícone
+                    secureTextEntry={!showPassword}
+                    value={loading ? "Carregando..." : decryptedPassword || "Senha não encontrada"}
+                    style={[styles.inputStyle, { paddingRight: 40 }]}
                 />
                 <TouchableOpacity
-                    style={styles.iconButtonPassword} // Usando um estilo específico para o ícone da senha
+                    style={styles.iconButtonPassword}
                     onPress={() => setShowPassword(!showPassword)}
                 >
                     <FontAwesome name={showPassword ? "eye-slash" : "eye"} size={20} color="#000" />
@@ -131,20 +126,17 @@ export default function DetailsScreen() {
                 </TouchableOpacity>
             </View>
 
-            {/* LINK */}
             <View style={styles.movedInputRow}>
                 <Input title="" placeholder="LINK" editable={false} value={link} style={styles.inputStyle} />
             </View>
 
-            {/* DESCRIPTION */}
             <View style={styles.movedInputRow}>
                 <Input title="" placeholder="DESCRIPTION" editable={false} multiline numberOfLines={4} value={description} style={styles.inputStyle} />
             </View>
 
-            {/* BOTÕES */}
             <View style={styles.buttonsContainer}>
-                <Button title="Edit" className="positive" onPress={handleEdit} />
-                <Button title="Delete" className="negative" onPress={handleDelete} />
+                <Button title="Editar" className="positive" onPress={handleEdit} />
+                <Button title="Excluir" className="negative" onPress={handleDelete} />
             </View>
         </ScrollView>
     );

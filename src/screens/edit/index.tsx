@@ -40,10 +40,11 @@ export default function EditScreen() {
   }, [navigation]);
 
   const handleSave = (values: any) => {
-    editPassword(id, values);  // Chama a função editPassword do contexto
-    alert('Senha editada com sucesso!');  // Adiciona a mensagem de sucesso
-    navigation.replace('Dashboard');  // Substitui a tela atual pela tela de Dashboard
-  };
+    editPassword(id, values); // Chama a função editPassword do contexto
+    alert('Senha editada com sucesso!'); // Exibe mensagem de sucesso
+    navigation.navigate('Dashboard'); // Navega normalmente para a tela Dashboard
+};
+
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
