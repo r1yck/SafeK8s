@@ -9,6 +9,7 @@ import styles from './styles';
 import global from '../../styles/global';
 import { PasswordsContext } from '../../context/PasswordsContext';
 import uuid from 'react-native-uuid'; // Para gerar IDs únicos
+import * as SecureStore from 'expo-secure-store';
 
 // Schema de validação
 const NewSchema = Yup.object().shape({
@@ -35,14 +36,25 @@ export default function NewScreen() {
     });
   }, [navigation]);
 
-  const handleSave = (values: any) => {
+  const handleSave = async (values: any) => {
     const newPassword = {
       ...values,
       id: uuid.v4(), // Gerando um ID único para a senha
     };
-    addPassword(newPassword); // Salvando no contexto
-    Alert.alert('Success', 'Password saved successfully!');
-    navigation.goBack(); // Voltando à tela anterior
+
+    try {
+      // Armazenar a senha de forma segura no SecureStore
+      await SecureStore.setItemAsync(newPassword.id, values.password);
+
+      // Chamar o addPassword do contexto, para adicionar a senha no estado global
+      addPassword(newPassword);
+
+      Alert.alert('Success', 'Password saved successfully!');
+      navigation.goBack(); // Voltando à tela anterior
+    } catch (error) {
+      console.error('Erro ao salvar a senha:', error);
+      Alert.alert('Error', 'Failed to save the password.');
+    }
   };
 
   return (

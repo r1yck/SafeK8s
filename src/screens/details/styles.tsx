@@ -20,7 +20,14 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         top: 10,
     },
+    iconButtonPassword: {
+        position: 'absolute',
+        right: 55,
+        top: 36, // Ajuste de posicionamento para o ícone da senha
+        padding: 10,
+    },
     inputStyle: {
+        color: '#000',
         width: 283, // Largura em px
         height: 51, // Altura em px
         borderWidth: 1, // Borda para destaque, ajuste se necessário
@@ -44,8 +51,6 @@ const styles = StyleSheet.create({
         width: 283, 
         right: 16,
     },
-    
-    
 });
 
 export default styles;

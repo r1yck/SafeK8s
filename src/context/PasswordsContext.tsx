@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from './authContext';
 import * as SecureStore from 'expo-secure-store';
 
-const SECRET_KEY = '@Henri0202'; // Chave secreta para criptografia, que pode ser útil para armazenamento com SecureStore
+const SECRET_KEY = 'henri0202'; // Chave secreta para criptografia, que pode ser útil para armazenamento com SecureStore
 
 interface Password {
   id: string;

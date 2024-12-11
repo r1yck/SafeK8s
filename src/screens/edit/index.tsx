@@ -36,7 +36,7 @@ export default function EditScreen() {
     }, [navigation]);
 
     const handleSave = (values: any) => {
-        editPassword(id, values);  // Chama a função editPassword
+        editPassword(id, values);  // Chama a função editPassword do contexto
         navigation.goBack();
     };
 
