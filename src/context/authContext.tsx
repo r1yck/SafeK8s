@@ -21,15 +21,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (username: string, password: string, keepConnected: boolean) => {
     try {
-      const storedUsers = await AsyncStorage.getItem('@users'); // Pega os usuários cadastrados
+      const storedUsers = await AsyncStorage.getItem('@users');
       const users = storedUsers ? JSON.parse(storedUsers) : [];
-      const foundUser = users.find((u: User) => u.username === username); // A busca é pelo username exato
-  
-      if (foundUser && foundUser.password === password) {
-        setUser(foundUser);
-  
+      const foundUser = users.find((u: any) => u.username === username && u.password === password);
+
+      if (foundUser) {
+        const userWithoutPassword = { username: foundUser.username, fullName: foundUser.fullName };
+        setUser(userWithoutPassword);
+
         if (keepConnected) {
-          await AsyncStorage.setItem('@user', JSON.stringify(foundUser));  // Armazenando o usuário logado
+          await AsyncStorage.setItem('@user', JSON.stringify(userWithoutPassword));
         }
       } else {
         throw new Error('Usuário ou senha inválidos.');
@@ -39,25 +40,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       throw error;
     }
   };
-  
+
   const register = async (username: string, password: string, fullName: string) => {
     try {
-      const newUser = { username, fullName, password }; 
+      const newUser = { username, fullName, password };
       const storedUsers = await AsyncStorage.getItem('@users');
       const users = storedUsers ? JSON.parse(storedUsers) : [];
-      users.push(newUser); // Adiciona o novo usuário à lista
-      await AsyncStorage.setItem('@users', JSON.stringify(users)); // Salva todos os usuários no AsyncStorage
-  
-      // Faz login automático após o registro
-      setUser(newUser);
-      await AsyncStorage.setItem('@user', JSON.stringify(newUser)); 
+
+      if (users.some((u: any) => u.username === username)) {
+        throw new Error('O nome de usuário já está em uso.');
+      }
+
+      users.push(newUser);
+      await AsyncStorage.setItem('@users', JSON.stringify(users));
+
+      const userWithoutPassword = { username, fullName };
+      setUser(userWithoutPassword);
+      await AsyncStorage.setItem('@user', JSON.stringify(userWithoutPassword));
     } catch (error: any) {
       console.error('Erro ao registrar o usuário:', error);
       throw error;
     }
   };
-  
-  
 
   const logout = async () => {
     setUser(null);
