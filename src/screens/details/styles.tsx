@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginTop: 30,
         width: '90%',
-        bottom: -100,
+        bottom: -80,
     },
     movedInputRow: {
         flexDirection: 'row',

@@ -136,7 +136,7 @@ export default function DetailsScreen() {
 
             <View style={styles.buttonsContainer}>
                 <Button title="Editar" className="positive" onPress={handleEdit} />
-                <Button title="Excluir" className="negative" onPress={handleDelete} />
+                <Button title="Delete" className="negative" onPress={handleDelete} />
             </View>
         </ScrollView>
     );
