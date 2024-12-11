@@ -23,11 +23,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   transparentText: {
-    color: 'white', // Cor do texto para o botão transparente
+    color: 'white', 
     fontFamily: 'Inter-Regular',
-    fontSize: 20, // Aumentei o tamanho da fonte apenas para o botão transparente
+    fontSize: 20, 
     textAlign: 'center',
-    flexWrap: 'wrap', // Permite que o texto quebre para a próxima linha
+    width: 235,
+    right: 35,
+    marginTop: 5,
   },
 
   // Estilo ajustado para o botão negativo conforme solicitado

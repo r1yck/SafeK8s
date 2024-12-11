@@ -37,80 +37,82 @@ export default function LoginScreen() {
     return (
         <KeyboardAvoidingView
             style={{ flex: 1 }}
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
-            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-                <ScrollView contentContainerStyle={global.container} keyboardShouldPersistTaps="handled">
-                    <Image source={require('../../../assets/App-Logo.png')} style={styles.image} />
-                    <View style={styles.containerTitle}>
-                        <Text style={[global.title, styles.title]}>SafeK8s</Text>
-                    </View>
-                    <Formik
-                        initialValues={{ username: '', password: '', keepConnected: false }}
-                        validationSchema={LoginSchema}
-                        onSubmit={async (values) => {
-                            const usernameError = validateUsername(values.username);
-                            if (usernameError) {
-                                Alert.alert('Erro', usernameError);
-                                return;
-                            }
-
-                            try {
-                                await login(values.username, values.password, values.keepConnected);
-                                navigation.navigate('Dashboard');
-                            } catch (error: any) {
-                                Alert.alert('Erro', error.message);
-                            }
-                        }}
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={{ flex: 1 }}>
+                    <ScrollView
+                        contentContainerStyle={[global.container, { flexGrow: 1 }]}
+                        keyboardShouldPersistTaps="handled"
                     >
-                        {({ handleChange, handleSubmit, values, setFieldValue }) => (
-                            <View>
-                                <View style={styles.containerForm}>
-                                    <Input
-                                        title=""
-                                        placeholder="USER"
-                                        returnKeyType="next"
-                                        onSubmitEditing={() => passwordRef.current?.focus()}
-                                        autoCapitalize="none"
-                                        value={values.username}
-                                        onChangeText={handleChange('username')}
-                                    />
-                                    <Input
-                                        title=""
-                                        placeholder="PASSWORD"
-                                        secureTextEntry
-                                        ref={passwordRef}
-                                        returnKeyType="done"
-                                        value={values.password}
-                                        onChangeText={handleChange('password')}
-                                    />
-                                </View>
-                                <View style={styles.containerCheckbox}>
-                                    {/* Vincular o estado do Formik ao Select */}
-                                    <Select
-                                        isSelected={values.keepConnected}
-                                        onToggle={() => setFieldValue('keepConnected', !values.keepConnected)}
-                                    />
-                                </View>
-                                <View style={styles.containerButtons}>
-                                    <Button title="Login" className="primary" onPress={() => handleSubmit()} />
-                                    <Button
-                                        title="Forgot password"
-                                        className="transparent"
-                                        onPress={() => navigation.navigate('ResetPassword')}
-                                    />
-                                    <Button
-                                        title="Register"
-                                        className="primary"
-                                        onPress={() => navigation.navigate('Register')}
-                                    />
-                                </View>
-                            </View>
-                        )}
-                    </Formik>
+                        <Image source={require('../../../assets/App-Logo.png')} style={styles.image} />
+                        <View style={styles.containerTitle}>
+                            <Text style={[global.title, styles.title]}>SafeK8s</Text>
+                        </View>
+                        <Formik
+                            initialValues={{ username: '', password: '', keepConnected: false }}
+                            validationSchema={LoginSchema}
+                            onSubmit={async (values) => {
+                                const usernameError = validateUsername(values.username);
+                                if (usernameError) {
+                                    Alert.alert('Erro', usernameError);
+                                    return;
+                                }
 
-
-                </ScrollView>
+                                try {
+                                    await login(values.username, values.password, values.keepConnected);
+                                    navigation.navigate('Dashboard');
+                                } catch (error: any) {
+                                    Alert.alert('Erro', error.message);
+                                }
+                            }}
+                        >
+                            {({ handleChange, handleSubmit, values, setFieldValue }) => (
+                                <View>
+                                    <View style={styles.containerForm}>
+                                        <Input
+                                            title=""
+                                            placeholder="USER"
+                                            returnKeyType="next"
+                                            onSubmitEditing={() => passwordRef.current?.focus()}
+                                            autoCapitalize="none"
+                                            value={values.username}
+                                            onChangeText={handleChange('username')}
+                                        />
+                                        <Input
+                                            title=""
+                                            placeholder="PASSWORD"
+                                            secureTextEntry
+                                            ref={passwordRef}
+                                            returnKeyType="done"
+                                            value={values.password}
+                                            onChangeText={handleChange('password')}
+                                        />
+                                    </View>
+                                    <View style={styles.containerCheckbox}>
+                                        <Select
+                                            isSelected={values.keepConnected}
+                                            onToggle={() => setFieldValue('keepConnected', !values.keepConnected)}
+                                        />
+                                    </View>
+                                    <View style={styles.containerButtons}>
+                                        <Button title="Login" className="primary" onPress={() => handleSubmit()} />
+                                        <Button
+                                            title="Forgot password"
+                                            className="transparent"
+                                            onPress={() => navigation.navigate('ResetPassword')}
+                                        />
+                                        <Button
+                                            title="Register"
+                                            className="primary"
+                                            onPress={() => navigation.navigate('Register')}
+                                        />
+                                    </View>
+                                </View>
+                            )}
+                        </Formik>
+                    </ScrollView>
+                </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
     );

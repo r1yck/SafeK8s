@@ -1,5 +1,16 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, TextInput, Image, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import React, { useRef } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Alert,
+} from 'react-native';
 import { Formik } from 'formik';
 import { useAuth } from '../../context/authContext';
 import RegisterSchema from '../../validators/register';
@@ -20,15 +31,29 @@ export default function RegisterScreen() {
   const { register } = useAuth();
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <ScrollView contentContainerStyle={global.container} keyboardShouldPersistTaps="handled">
-          <Image source={require('../../../assets/App-Logo.png')} style={styles.image} />
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView
+          contentContainerStyle={global.container}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Image
+            source={require('../../../assets/App-Logo.png')}
+            style={styles.image}
+          />
           <View style={styles.containerTitle}>
             <Text style={[global.title, styles.title]}>SafeK8s</Text>
           </View>
           <Formik
-            initialValues={{ username: '', fullName: '', password: '', confirmPassword: '', keepConnected: false }}
+            initialValues={{
+              username: '',
+              fullName: '',
+              password: '',
+              confirmPassword: '',
+            }}
             validationSchema={RegisterSchema}
             onSubmit={async (values) => {
               try {
@@ -65,7 +90,8 @@ export default function RegisterScreen() {
                     placeholder="Password"
                     secureTextEntry
                     ref={passwordRef}
-                    returnKeyType="done"
+                    returnKeyType="next"
+                    onSubmitEditing={() => confirmPasswordRef.current?.focus()}
                     value={values.password}
                     onChangeText={handleChange('password')}
                   />
@@ -80,7 +106,11 @@ export default function RegisterScreen() {
                   />
                 </View>
                 <View style={styles.containerButtons}>
-                  <Button title="Register" className="primary" onPress={() => handleSubmit()} />
+                  <Button
+                    title="Register"
+                    className="primary"
+                    onPress={() => handleSubmit()}
+                  />
                   <Button
                     title="Already have an account?"
                     className="transparent"

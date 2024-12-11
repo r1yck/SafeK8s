@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 369,
     height: 116,
-    left: 14,
+    left: 30,
     top: 283,
   },
   title: {
@@ -38,14 +38,13 @@ const styles = StyleSheet.create({
     height: '90%',
     width: '90%',
     paddingBottom: 0,
-    bottom: 30,
+    bottom: 70,
   },
   containerButtons: {
     ...global.centerAlign,
     flexDirection: 'column',
-    justifyContent: 'space-around',
     height: '20%',
-    bottom: 30,
+    bottom: 100,
   },
 });
 
