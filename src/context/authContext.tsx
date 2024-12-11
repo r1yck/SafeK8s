@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import * as SecureStore from 'expo-secure-store';  // Importando o SecureStore
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type User = {
@@ -23,17 +24,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const storedUsers = await AsyncStorage.getItem('@users');
       const users = storedUsers ? JSON.parse(storedUsers) : [];
-      const foundUser = users.find((u: any) => u.username === username && u.password === password);
+      const foundUser = users.find((u: any) => u.username === username);
 
       if (foundUser) {
-        const userWithoutPassword = { username: foundUser.username, fullName: foundUser.fullName };
-        setUser(userWithoutPassword);
+        // Descriptografando a senha
+        const decryptedPassword = await SecureStore.getItemAsync(foundUser.username);
+        
+        if (decryptedPassword === password) {
+          const userWithoutPassword = { username: foundUser.username, fullName: foundUser.fullName };
+          setUser(userWithoutPassword);
 
-        if (keepConnected) {
-          await AsyncStorage.setItem('@user', JSON.stringify(userWithoutPassword));
+          if (keepConnected) {
+            await AsyncStorage.setItem('@user', JSON.stringify(userWithoutPassword));
+          }
+        } else {
+          throw new Error('Usuário ou senha inválidos.');
         }
       } else {
-        throw new Error('Usuário ou senha inválidos.');
+        throw new Error('Usuário não encontrado.');
       }
     } catch (error: any) {
       console.error(error.message);
@@ -43,13 +51,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const register = async (username: string, password: string, fullName: string) => {
     try {
-      const newUser = { username, fullName, password };
+      const newUser = { username, fullName };
       const storedUsers = await AsyncStorage.getItem('@users');
       const users = storedUsers ? JSON.parse(storedUsers) : [];
 
       if (users.some((u: any) => u.username === username)) {
         throw new Error('O nome de usuário já está em uso.');
       }
+
+      // Criptografando a senha antes de salvar
+      await SecureStore.setItemAsync(username, password);
 
       users.push(newUser);
       await AsyncStorage.setItem('@users', JSON.stringify(users));

@@ -1,6 +1,9 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from './authContext';
+import * as SecureStore from 'expo-secure-store';
+
+const SECRET_KEY = '@Henri0202'; // Chave secreta para criptografia, que pode ser útil para armazenamento com SecureStore
 
 interface Password {
   id: string;
@@ -25,14 +28,23 @@ export const PasswordsContext = createContext<PasswordsContextData>({} as Passwo
 export function PasswordsProvider({ children }: { children: ReactNode }) {
   const [passwords, setPasswords] = useState<Password[]>([]);
   const [originalPasswords, setOriginalPasswords] = useState<Password[]>([]);
-  const [loading, setLoading] = useState(true); // Adicionando estado de loading
-
+  const [loading, setLoading] = useState(true);
   const { user } = useAuth();
+
+  // Função para armazenar senha no SecureStore (usando o nome de usuário como chave)
+  const storePasswordSecurely = async (key: string, password: string) => {
+    await SecureStore.setItemAsync(key, password); // Armazena a senha criptografada com SecureStore
+  };
+
+  // Função para recuperar a senha do SecureStore
+  const retrievePasswordSecurely = async (key: string): Promise<string | null> => {
+    return await SecureStore.getItemAsync(key); // Recupera a senha criptografada
+  };
 
   useEffect(() => {
     const loadPasswords = async () => {
       if (!user) {
-        setLoading(false); // Se não houver usuário logado, apenas finalize o loading
+        setLoading(false);
         return;
       }
 
@@ -41,13 +53,22 @@ export function PasswordsProvider({ children }: { children: ReactNode }) {
         if (storedPasswords) {
           const parsedPasswords = JSON.parse(storedPasswords);
           const userPasswords = parsedPasswords[user.username] || [];
-          setPasswords(userPasswords);
-          setOriginalPasswords(userPasswords);
+
+          // Descriptografar todas as senhas ao carregar
+          const decryptedPasswords = await Promise.all(
+            userPasswords.map(async (password: Password) => ({
+              ...password,
+              password: await retrievePasswordSecurely(password.id), // Recupera a senha criptografada
+            }))
+          );
+
+          setPasswords(decryptedPasswords);
+          setOriginalPasswords(decryptedPasswords);
         }
       } catch (error) {
         console.error('Erro ao carregar as senhas do AsyncStorage:', error);
       } finally {
-        setLoading(false); // Finaliza o loading após carregar ou falhar
+        setLoading(false);
       }
     };
 
@@ -55,13 +76,16 @@ export function PasswordsProvider({ children }: { children: ReactNode }) {
   }, [user]);
 
   const addPassword = async (password: Password) => {
-    if (!user || loading) return; // Impede a adição de senha enquanto o loading está em progresso
+    if (!user || loading) return;
     try {
       const storedPasswords = await AsyncStorage.getItem('@passwords');
       const parsedPasswords = storedPasswords ? JSON.parse(storedPasswords) : {};
       const userPasswords = parsedPasswords[user.username] || [];
 
-      const updatedPasswords = [...userPasswords, password];
+      // Armazena a senha de forma segura usando SecureStore
+      await storePasswordSecurely(password.id, password.password);
+
+      const updatedPasswords = [...userPasswords, { ...password }];
       parsedPasswords[user.username] = updatedPasswords;
 
       await AsyncStorage.setItem('@passwords', JSON.stringify(parsedPasswords));
@@ -78,6 +102,9 @@ export function PasswordsProvider({ children }: { children: ReactNode }) {
       const storedPasswords = await AsyncStorage.getItem('@passwords');
       const parsedPasswords: Record<string, Password[]> = storedPasswords ? JSON.parse(storedPasswords) : {};
       const userPasswords = parsedPasswords[user.username] || [];
+
+      // Remove a senha do SecureStore
+      await SecureStore.deleteItemAsync(id);
 
       const updatedPasswords = userPasswords.filter((password: Password) => password.id !== id);
       parsedPasswords[user.username] = updatedPasswords;
@@ -100,6 +127,12 @@ export function PasswordsProvider({ children }: { children: ReactNode }) {
       const updatedPasswords = userPasswords.map((password: Password) =>
         password.id === id ? { ...password, ...updatedPassword } : password
       );
+
+      // Se a senha foi alterada, atualize no SecureStore
+      if (updatedPassword.password) {
+        await storePasswordSecurely(id, updatedPassword.password as string);
+      }
+
       parsedPasswords[user.username] = updatedPasswords;
 
       await AsyncStorage.setItem('@passwords', JSON.stringify(parsedPasswords));
