@@ -3,10 +3,10 @@ import { object, string, boolean } from 'yup';
 const LoginSchema = object({
     username: string()
         .trim()
-        .required("Este campo é obrigatório."),
+        .required("This field is required."),
     password: string()
         .trim()
-        .required("Este campo é obrigatório."),
+        .required("This field is required."),
     keepConnected: boolean()
 });
 

@@ -38,7 +38,7 @@ export default function LoginScreen() {
         <KeyboardAvoidingView
             style={{ flex: 1 }}
             behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20} 
+            keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
         >
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={{ flex: 1 }}>
@@ -52,14 +52,8 @@ export default function LoginScreen() {
                         </View>
                         <Formik
                             initialValues={{ username: '', password: '', keepConnected: false }}
-                            validationSchema={LoginSchema}
+                            validationSchema={LoginSchema} // Validação Yup
                             onSubmit={async (values) => {
-                                const usernameError = validateUsername(values.username);
-                                if (usernameError) {
-                                    Alert.alert('Erro', usernameError);
-                                    return;
-                                }
-
                                 try {
                                     await login(values.username, values.password, values.keepConnected);
                                     navigation.navigate('Dashboard');
@@ -68,7 +62,7 @@ export default function LoginScreen() {
                                 }
                             }}
                         >
-                            {({ handleChange, handleSubmit, values, setFieldValue }) => (
+                            {({ handleChange, handleSubmit, values, errors, touched, setFieldValue }) => (
                                 <View>
                                     <View style={styles.containerForm}>
                                         <Input
@@ -80,6 +74,10 @@ export default function LoginScreen() {
                                             value={values.username}
                                             onChangeText={handleChange('username')}
                                         />
+                                        {touched.username && errors.username && (
+                                            <Text style={{ color: 'red', marginTop: 5 }}>{errors.username}</Text>
+                                        )}
+
                                         <Input
                                             title=""
                                             placeholder="PASSWORD"
@@ -89,7 +87,11 @@ export default function LoginScreen() {
                                             value={values.password}
                                             onChangeText={handleChange('password')}
                                         />
+                                        {touched.password && errors.password && (
+                                            <Text style={{ color: 'red', marginTop: 5 }}>{errors.password}</Text>
+                                        )}
                                     </View>
+
                                     <View style={styles.containerCheckbox}>
                                         <Select
                                             isSelected={values.keepConnected}

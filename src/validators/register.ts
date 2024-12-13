@@ -3,20 +3,20 @@ import { object, string, ref } from 'yup';
 const RegisterSchema = object({
   username: string()
     .trim()
-    .required("Este campo é obrigatório.")
-    .matches(/^[a-zA-Z0-9]+$/, "Nome de usuário deve conter apenas letras e números."),
+    .required("This field is required.")
+    .matches(/^[a-zA-Z0-9]+$/, "Username must contain only letters and numbers."),
   fullName: string()
     .trim()
-    .required("Nome completo é obrigatório.")
-    .min(3, "Nome completo deve ter pelo menos 3 caracteres."),
+    .required("Full name is required.")
+    .min(3, "Full name must be at least 3 characters long."),
   password: string()
     .trim()
-    .required("Este campo é obrigatório.")
-    .min(6, "A senha deve ter pelo menos 6 caracteres."),
+    .required("This field is required.")
+    .min(6, "Password must be at least 6 characters long."),
   confirmPassword: string()
     .trim()
-    .oneOf([ref('password')], "As senhas não coincidem.") 
-    .required("Confirmação de senha é obrigatória.")
+    .oneOf([ref('password')], "Passwords do not match.") 
+    .required("Password confirmation is required.")
 });
 
 export default RegisterSchema;
