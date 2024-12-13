@@ -9,26 +9,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 20,
     marginBottom: 0,
-    height: 120, // Altura fixa para alinhar os elementos verticalmente
-
+    height: 120, 
   },
   logo: {
     width: 80,
     height: 80,
-    resizeMode: 'contain', // Para ajustar a logo dentro da área sem cortar
+    resizeMode: 'contain', 
     left: -50,
   },
   logoutButton: {
     display: 'flex',
-    width: 121, // Largura ajustada
-    height: 30, // Altura ajustada
-    paddingVertical: 3,  // Padding vertical ajustado
-    paddingHorizontal: 27, // Padding horizontal ajustado
+    width: 121,
+    height: 30, 
+    paddingVertical: 3,  
+    paddingHorizontal: 27,
     flexShrink: 0,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: '#000', // Cor da borda
-    backgroundColor: '#EC0000', // Cor de fundo do botão
+    borderColor: '#000', 
+    backgroundColor: '#EC0000', 
     right: -50,
   },
   logoutButtonText: {

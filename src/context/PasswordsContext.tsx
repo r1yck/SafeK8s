@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from './authContext';
 import * as SecureStore from 'expo-secure-store';
 
-const SECRET_KEY = 'henri0202'; // Chave secreta para criptografia, que pode ser útil para armazenamento com SecureStore
+const SECRET_KEY = 'henri0202';
 
 interface Password {
   id: string;
@@ -31,14 +31,12 @@ export function PasswordsProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
 
-  // Função para armazenar senha no SecureStore (usando o nome de usuário como chave)
   const storePasswordSecurely = async (key: string, password: string) => {
-    await SecureStore.setItemAsync(key, password); // Armazena a senha criptografada com SecureStore
+    await SecureStore.setItemAsync(key, password);
   };
 
-  // Função para recuperar a senha do SecureStore
   const retrievePasswordSecurely = async (key: string): Promise<string | null> => {
-    return await SecureStore.getItemAsync(key); // Recupera a senha criptografada
+    return await SecureStore.getItemAsync(key);
   };
 
   useEffect(() => {
@@ -54,16 +52,17 @@ export function PasswordsProvider({ children }: { children: ReactNode }) {
           const parsedPasswords = JSON.parse(storedPasswords);
           const userPasswords = parsedPasswords[user.username] || [];
 
-          // Descriptografar todas as senhas ao carregar
           const decryptedPasswords = await Promise.all(
             userPasswords.map(async (password: Password) => ({
               ...password,
-              password: await retrievePasswordSecurely(password.id), // Recupera a senha criptografada
+              password: await retrievePasswordSecurely(password.id),
             }))
           );
 
-          setPasswords(decryptedPasswords);
-          setOriginalPasswords(decryptedPasswords);
+          if (decryptedPasswords.length !== passwords.length) {
+            setPasswords(decryptedPasswords);
+            setOriginalPasswords(decryptedPasswords);
+          }
         }
       } catch (error) {
         console.error('Erro ao carregar as senhas do AsyncStorage:', error);
@@ -82,7 +81,6 @@ export function PasswordsProvider({ children }: { children: ReactNode }) {
       const parsedPasswords = storedPasswords ? JSON.parse(storedPasswords) : {};
       const userPasswords = parsedPasswords[user.username] || [];
 
-      // Armazena a senha de forma segura usando SecureStore
       await storePasswordSecurely(password.id, password.password);
 
       const updatedPasswords = [...userPasswords, { ...password }];
@@ -103,7 +101,6 @@ export function PasswordsProvider({ children }: { children: ReactNode }) {
       const parsedPasswords: Record<string, Password[]> = storedPasswords ? JSON.parse(storedPasswords) : {};
       const userPasswords = parsedPasswords[user.username] || [];
 
-      // Remove a senha do SecureStore
       await SecureStore.deleteItemAsync(id);
 
       const updatedPasswords = userPasswords.filter((password: Password) => password.id !== id);
@@ -128,7 +125,6 @@ export function PasswordsProvider({ children }: { children: ReactNode }) {
         password.id === id ? { ...password, ...updatedPassword } : password
       );
 
-      // Se a senha foi alterada, atualize no SecureStore
       if (updatedPassword.password) {
         await storePasswordSecurely(id, updatedPassword.password as string);
       }
@@ -151,7 +147,9 @@ export function PasswordsProvider({ children }: { children: ReactNode }) {
         password.title.toLowerCase().includes(query.toLowerCase()) ||
         (password.description && password.description.toLowerCase().includes(query.toLowerCase()))
       );
-      setPasswords(filteredPasswords);
+      if (filteredPasswords.length !== passwords.length) {
+        setPasswords(filteredPasswords);
+      }
     }
   };
 
