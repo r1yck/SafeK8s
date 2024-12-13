@@ -65,7 +65,7 @@ export function PasswordsProvider({ children }: { children: ReactNode }) {
           }
         }
       } catch (error) {
-        console.error('Erro ao carregar as senhas do AsyncStorage:', error);
+        console.error('Error loading passwords from AsyncStorage:', error);
       } finally {
         setLoading(false);
       }
@@ -90,7 +90,7 @@ export function PasswordsProvider({ children }: { children: ReactNode }) {
       setPasswords(updatedPasswords);
       setOriginalPasswords(updatedPasswords);
     } catch (error) {
-      console.error('Erro ao adicionar senha no AsyncStorage:', error);
+      console.error('Error adding password to AsyncStorage:', error);
     }
   };
 
@@ -110,7 +110,7 @@ export function PasswordsProvider({ children }: { children: ReactNode }) {
       setPasswords(updatedPasswords);
       setOriginalPasswords(updatedPasswords);
     } catch (error) {
-      console.error('Erro ao deletar senha no AsyncStorage:', error);
+      console.error('Error deleting password from AsyncStorage:', error);
     }
   };
 
@@ -135,7 +135,7 @@ export function PasswordsProvider({ children }: { children: ReactNode }) {
       setPasswords(updatedPasswords);
       setOriginalPasswords(updatedPasswords);
     } catch (error) {
-      console.error('Erro ao editar senha no AsyncStorage:', error);
+      console.error('Error editing password in AsyncStorage:', error);
     }
   };
 

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import * as SecureStore from 'expo-secure-store';  // Importando o SecureStore
+import * as SecureStore from 'expo-secure-store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type User = {
@@ -12,6 +12,7 @@ type AuthContextData = {
   login: (username: string, password: string, keepConnected: boolean) => Promise<void>;
   register: (username: string, password: string, fullName: string) => Promise<void>;
   logout: () => void;
+  updatePassword: (oldPassword: string, newPassword: string) => Promise<void>;
   isAuthenticated: boolean;
 };
 
@@ -27,9 +28,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const foundUser = users.find((u: any) => u.username === username);
 
       if (foundUser) {
-        // Descriptografando a senha
         const decryptedPassword = await SecureStore.getItemAsync(foundUser.username);
-        
+
         if (decryptedPassword === password) {
           const userWithoutPassword = { username: foundUser.username, fullName: foundUser.fullName };
           setUser(userWithoutPassword);
@@ -38,10 +38,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             await AsyncStorage.setItem('@user', JSON.stringify(userWithoutPassword));
           }
         } else {
-          throw new Error('Usuário ou senha inválidos.');
+          throw new Error('Invalid username or password.');
         }
       } else {
-        throw new Error('Usuário não encontrado.');
+        throw new Error('User not found.');
       }
     } catch (error: any) {
       console.error(error.message);
@@ -56,10 +56,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const users = storedUsers ? JSON.parse(storedUsers) : [];
 
       if (users.some((u: any) => u.username === username)) {
-        throw new Error('O nome de usuário já está em uso.');
+        throw new Error('Username is already taken.');
       }
 
-      // Criptografando a senha antes de salvar
       await SecureStore.setItemAsync(username, password);
 
       users.push(newUser);
@@ -69,7 +68,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(userWithoutPassword);
       await AsyncStorage.setItem('@user', JSON.stringify(userWithoutPassword));
     } catch (error: any) {
-      console.error('Erro ao registrar o usuário:', error);
+      console.error('Error registering user:', error);
       throw error;
     }
   };
@@ -77,6 +76,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = async () => {
     setUser(null);
     await AsyncStorage.removeItem('@user');
+  };
+
+  const updatePassword = async (newUsername: string, newPassword: string) => {
+    try {
+      const storedUsers = await AsyncStorage.getItem('@users');
+      const users = storedUsers ? JSON.parse(storedUsers) : [];
+      const foundUser = users.find((u: any) => u.username === newUsername); 
+
+      if (foundUser) {
+        await SecureStore.setItemAsync(newUsername, newPassword);
+
+        const updatedUsers = users.map((u: any) =>
+          u.username === newUsername ? { ...u, password: newPassword } : u
+        );
+        await AsyncStorage.setItem('@users', JSON.stringify(updatedUsers));
+      } else {
+        throw new Error('User not found.');
+      }
+    } catch (error: any) {
+      console.error('Error updating password:', error);
+      throw error;
+    }
   };
 
   const loadUserFromStorage = async () => {
@@ -91,7 +112,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, isAuthenticated: !!user }}>
+    <AuthContext.Provider value={{ user, login, register, logout, updatePassword, isAuthenticated: !!user }}>
       {children}
     </AuthContext.Provider>
   );

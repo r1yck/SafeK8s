@@ -2,8 +2,8 @@ import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
 import AppNavigation from './src/navigation/AppNavigation';
-import { AuthProvider } from './src/context/authContext'; // Importa o AuthProvider
-import { PasswordsProvider } from './src/context/PasswordsContext'; // Importa o PasswordsProvider
+import { AuthProvider } from './src/context/authContext';
+import { PasswordsProvider } from './src/context/PasswordsContext'; 
 
 const App: React.FC = () => {
   const [fontsLoaded] = useFonts({

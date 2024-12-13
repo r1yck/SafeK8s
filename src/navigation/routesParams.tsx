@@ -4,7 +4,7 @@ type PasswordData = {
   link: string;
   email: string;
   password: string;
-  description?: string;  // Permite description ser undefined
+  description?: string;  
 };
 
 export type RoutesParams = {
