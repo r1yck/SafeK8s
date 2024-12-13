@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -21,6 +21,15 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
+  const loadUserFromStorage = async () => {
+    const storedUser = await AsyncStorage.getItem('@user');
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+    }
+  };
+
+  // Função de login
   const login = async (username: string, password: string, keepConnected: boolean) => {
     try {
       const storedUsers = await AsyncStorage.getItem('@users');
@@ -36,6 +45,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
           if (keepConnected) {
             await AsyncStorage.setItem('@user', JSON.stringify(userWithoutPassword));
+          } else {
+            await AsyncStorage.removeItem('@user');
           }
         } else {
           throw new Error('Invalid username or password.');
@@ -60,7 +71,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
 
       await SecureStore.setItemAsync(username, password);
-
       users.push(newUser);
       await AsyncStorage.setItem('@users', JSON.stringify(users));
 
@@ -78,11 +88,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await AsyncStorage.removeItem('@user');
   };
 
+  // Função de atualização de senha
   const updatePassword = async (newUsername: string, newPassword: string) => {
     try {
       const storedUsers = await AsyncStorage.getItem('@users');
       const users = storedUsers ? JSON.parse(storedUsers) : [];
-      const foundUser = users.find((u: any) => u.username === newUsername); 
+      const foundUser = users.find((u: any) => u.username === newUsername);
 
       if (foundUser) {
         await SecureStore.setItemAsync(newUsername, newPassword);
@@ -100,14 +111,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const loadUserFromStorage = async () => {
-    const storedUser = await AsyncStorage.getItem('@user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  };
-
-  React.useEffect(() => {
+  useEffect(() => {
     loadUserFromStorage();
   }, []);
 

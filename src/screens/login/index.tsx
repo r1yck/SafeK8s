@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TextInput, Image, ScrollView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import Input from '../../components/inputs/input';
 import Button from '../../components/buttons/button';
@@ -18,11 +18,17 @@ export default function LoginScreen() {
     const navigation = useNavigation<loginParamsList>();
     const passwordRef = useRef<TextInput>(null);
     const [isChecked, setIsChecked] = useState(false);
-    const { login } = useAuth();
+    const { login, user } = useAuth();
 
     const toggleCheckbox = () => {
         setIsChecked((prevState) => !prevState);
     };
+
+    useEffect(() => {
+        if (user) {
+            navigation.navigate('Dashboard');
+        }
+    }, [user, navigation]);
 
     const validateUsername = (username: string) => {
         if (username.trim() === "") {
@@ -47,7 +53,7 @@ export default function LoginScreen() {
                     </View>
                     <Formik
                         initialValues={{ username: '', password: '', keepConnected: false }}
-                        validationSchema={LoginSchema} // Validação Yup
+                        validationSchema={LoginSchema}
                         onSubmit={async (values) => {
                             try {
                                 await login(values.username, values.password, values.keepConnected);
