@@ -1,4 +1,4 @@
-# SafeK8s
+# <p align="center">SafeK8s</p>
 
 <p align="center">
   <img src="assets/App-Logo.png" width="200" />
