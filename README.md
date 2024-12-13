@@ -1,5 +1,7 @@
 # SafeK8s
 
+![Logo do SafeK8s](assets/App-Logo.png)
+
 ## Descrição
 
 O **SafeK8s** é um aplicativo móvel desenvolvido para gerenciar e armazenar senhas de forma segura e prática. Com uma interface intuitiva, o SafeK8s garante que os usuários possam acessar suas credenciais de maneira rápida e fácil, sem comprometer a segurança dos seus dados. O aplicativo utiliza criptografia avançada para proteger todas as informações sensíveis, proporcionando tranquilidade e confiança no gerenciamento das senhas.
