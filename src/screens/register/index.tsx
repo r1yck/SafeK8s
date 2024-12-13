@@ -107,7 +107,7 @@ export default function RegisterScreen() {
                                     <Button
                                         title="Already have an account?"
                                         className="transparent"
-                                        onPress={() => navigation.navigate('Login')}
+                                        onPress={() => navigation.navigate('Login', { resetFields: true })}
                                     />
                                 </View>
                             </View>

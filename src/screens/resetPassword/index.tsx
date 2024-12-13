@@ -17,7 +17,7 @@ const ResetPasswordScreen: React.FC = () => {
   const navigation = useNavigation<resetPasswordParamsList>();
   const passwordRef = useRef<TextInput>(null);
   const confirmPasswordRef = useRef<TextInput>(null);
-  const { updatePassword } = useAuth(); // Função para atualizar a senha
+  const { updatePassword } = useAuth(); 
 
   const validationSchema = Yup.object().shape({
     user: Yup.string().required('User is required'),
@@ -29,10 +29,10 @@ const ResetPasswordScreen: React.FC = () => {
 
   const handleResetPassword = async (values: { user: string, newPassword: string }) => {
     try {
-      // Atualizando a senha com o nome de usuário e nova senha
-      await updatePassword(values.user, values.newPassword); // Passando o nome de usuário e a nova senha
+    
+      await updatePassword(values.user, values.newPassword); 
       Alert.alert('Success', 'Password successfully changed');
-      navigation.navigate('Login'); // Redireciona para a tela de login após sucesso
+      navigation.navigate('Login', { resetFields: true }); 
     } catch (error: any) {
       Alert.alert('Error', error.message || 'An error occurred while updating the password');
     }
@@ -45,7 +45,7 @@ const ResetPasswordScreen: React.FC = () => {
         <Text style={[global.title, styles.title]}>SafeK8s</Text>
       </View>
       <Formik
-        initialValues={{ user: '', newPassword: '', confirmPassword: '' }} // O campo user será preenchido com o valor do username
+        initialValues={{ user: '', newPassword: '', confirmPassword: '' }} 
         validationSchema={validationSchema}
         onSubmit={handleResetPassword}
       >
@@ -91,7 +91,7 @@ const ResetPasswordScreen: React.FC = () => {
                 className="primary"
                 onPress={() => handleSubmit()}
               />
-              <Button title="Cancel" className="transparent" onPress={() => navigation.navigate('Login')} />
+              <Button title="Cancel" className="transparent" onPress={() => navigation.navigate('Login', { resetFields: true })} />
             </View>
           </View>
         )}

@@ -8,12 +8,12 @@ type PasswordData = {
 };
 
 export type RoutesParams = {
-  Login: undefined;
+  Login: { resetFields?: boolean };
   ResetPassword: undefined;
   Register: undefined;
   Dashboard: undefined;
   New: undefined;
-  Details:  { passwordData: PasswordData };
+  Details: { passwordData: PasswordData };
   EditScreen: {
     passwordData: {
       id: string;
@@ -23,6 +23,5 @@ export type RoutesParams = {
       password: string;
       description: string;
     };
-    
   };
 };

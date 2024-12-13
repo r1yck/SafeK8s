@@ -52,7 +52,7 @@ export default function DashboardScreen() {
                         title="Logout"
                         className="negative"
                         style={styles.logoutButton}
-                        onPress={() => navigation.navigate('Login')}
+                        onPress={() => navigation.navigate('Login', { resetFields: true })}
                     />
                 </View>
 

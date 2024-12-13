@@ -85,7 +85,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = async () => {
     setUser(null);
-    await AsyncStorage.removeItem('@user');
+    await AsyncStorage.removeItem('@user'); // Remover o usuário atual
+    // Opcionalmente, remova qualquer outro dado persistido que possa afetar o login
+    await AsyncStorage.removeItem('@users'); // Se necessário, remova todos os usuários cadastrados
   };
 
   // Função de atualização de senha
