@@ -1,6 +1,8 @@
 # SafeK8s
 
-![Logo do SafeK8s](assets/App-Logo.png)
+<p align="center">
+  <img src="assets/App-Logo.png" width="200" />
+</p>
 
 ## Descrição
 
