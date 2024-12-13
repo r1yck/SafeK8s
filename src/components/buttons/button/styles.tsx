@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#000', // Cor da borda
-    backgroundColor: '#78290F', // Cor de fundo do botão
+    backgroundColor: '#EC0000', // Cor de fundo do botão
   },
 
   positiveButton: {
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#000', // Cor da borda
-    backgroundColor: '#FF7D00', // Cor de fundo do botão
+    backgroundColor: '#0CDA01', // Cor de fundo do botão
   },
 });
 

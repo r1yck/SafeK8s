@@ -4,7 +4,7 @@ const global = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 20,
-        backgroundColor: '#15616D',
+        backgroundColor: '#0797AD',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -34,7 +34,7 @@ const global = StyleSheet.create({
     button: {
         paddingVertical: 12,
         paddingHorizontal: 32,
-        backgroundColor: '#005f6b',
+        backgroundColor: '#0797AD',
         borderRadius: 5,
     },
     centerAlign: { 

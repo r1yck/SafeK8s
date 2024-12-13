@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#000', // Cor da borda
-    backgroundColor: '#78290F', // Cor de fundo do botão
+    backgroundColor: '#EC0000', // Cor de fundo do botão
     right: -50,
   },
   logoutButtonText: {
@@ -54,6 +54,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#FFECD1',
     borderRadius: 8,
+    borderColor: '#000',
+    borderWidth: 1,
     paddingHorizontal: 8,
     marginVertical: 16,
     height: 48,
@@ -70,7 +72,7 @@ const styles = StyleSheet.create({
     right: 28,
     width: 50,
     height: 50,
-    backgroundColor: '#ff8000',
+    backgroundColor: '#0CDA01',
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',

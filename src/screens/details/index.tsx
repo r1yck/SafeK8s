@@ -108,7 +108,7 @@ export default function DetailsScreen() {
 
             <View style={styles.inputRow}>
                 <Input
-                    title="Password"
+                    title=""
                     placeholder="PASSWORD"
                     editable={false}
                     secureTextEntry={!showPassword}
